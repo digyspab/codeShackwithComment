@@ -1,0 +1,182 @@
+<% include ../index.ejs %>
+
+
+<main role="main" class="container-fluid h-100 bg-light text-dark">
+    <div class="row justify-content-center align-items-center">
+        <div class="my-0 p-3 bg-black rounded shadow-sm">
+            <div class="message-box">
+                <small> <% include ../middleware/messages.ejs %></small>
+            </div>
+            <div class="d-flex align-items-center my-3 text-white-50 bg-purple rounded shadow-sm">
+
+                <h2>Registration Form</h2>
+
+            </div>
+
+
+
+            <!-- FORM -->
+            <form action="/users/register" method="POST" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="name">Name</label>
+                        <input type="name" name="name" class="form-control" id="name" placeholder="Enter name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control" id="username"
+                            placeholder="Enter unique uername">
+                    </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="Enter password">
+                </div>
+
+                <!-- PASSWORD -->
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" id="password"
+                            placeholder="Enter password">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="confirmPass">Confirm Password</label>
+                        <input type="password" name="confirmPass" class="form-control" id="confirmPass"
+                            placeholder="Confirm Password">
+                    </div>
+                </div>
+
+                <!-- Marital Status -->
+                <label>Marital Status : </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="maritalstatus" id="married" value="Married">
+                    <label class="form-check-label" for="married">Married</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="maritalstatus" id="unmarried" value="Unmarried">
+                    <label class="form-check-label" for="unmarried">Unmarried</label>
+                </div>
+                <br>
+
+                <!-- HOBBIES -->
+                <label class="mt-1">Hobbies : </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="hobbies" type="checkbox" value="Indor gemes" id="indor">
+                    <label class="form-check-label" for="indor">
+                        Indor games
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="hobbies" type="checkbox" value="Outdor games" id="outdor">
+                    <label class="form-check-label" for="outdor">
+                        Outdor games
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="hobbies" type="checkbox" value="Tech loving" id="techloving">
+                    <label class="form-check-label" for="techloving">
+                        Tech loving
+                    </label>
+                </div>
+
+                <!-- GENDER -->
+                <br>
+                <label>Gender : </label>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="male" value="Male">
+                    <label class="form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="female" value="Female">
+                    <label class="form-check-label" for="female">Female</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="other" value="Others">
+                    <label class="form-check-label" for="other">Others</label>
+                </div>
+
+                <!-- DATE PICKER -->
+                <div class="form-group">
+                    <label for="dob">D.O.B.</label>
+                    <input type="date" name="dob" class="form-control" id="datepicker">
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="form-group">
+                    <label for="contactnumber">Contact Number </label>
+                    <input type="number" name="contactnumber" class="form-control" id="contactnumber" placeholder="Contact Number">
+                </div>
+
+                <!-- ADDRESS -->
+                <div class="form-group">
+                    <label for="house">House No. </label>
+                    <input type="text" name="house" class="form-control" id="house" placeholder="1234 Main St">
+                </div>
+                <div class="form-group">
+                    <label for="street">Street</label>
+                    <input type="text" name="street" class="form-control" id="street"
+                        placeholder="Apartment, studio, or floor">
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="city">City</label>
+                        <input type="text" name="city" class="form-control" id="city">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="country">Country</label>
+                        <select id="country" name="country" class="form-control">
+                            <option selected>Choose...</option>
+                            <option>India</option>
+                            <option>Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="zip">Zip</label>
+                        <input type="text" name="zip" class="form-control" id="zip">
+                    </div>
+                </div>
+
+                <!-- TEXTAREA -->
+                <div class="form-group">
+                    <label for="textareawrite">Write something</label>
+                    <textarea name="textareawrite" class="form-control" id="textareawrite" rows="3"></textarea>
+                </div>
+
+                <!-- IMAGE -->
+                <div class="form-group">
+                    <label for="avtar">Browse image</label>
+                    <input type="file" name="avtar" class="form-control-file" id="avtar">
+                </div>
+
+                <!-- REMEMBER ME -->
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                            Check me out
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+
+
+            <!-- END FORM -->
+            <div class="media text-muted pt-3">
+                <small class="d-block text-right mt-3 pb-4">
+                    <a href="/users/login">Already Login</a>
+                    <a href="/users/admin" style="color: #6f42c1"><span> || </span> Admin Login</a>
+                </small>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+
+<% include ../include/footer %>

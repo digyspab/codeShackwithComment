@@ -1,0 +1,50 @@
+
+
+.form-inlines {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-left: 10rem;
+}
+
+.navbar-toggler:focus, .navbar-toggler:active {
+    outline: none;
+    box-shadow: none;
+  }
+
+
+@media screen and (max-width: 600px) {
+    .btn-search-adjust {
+        margin-left: 8px;
+    }
+    .form-inlines {
+        margin: 0;
+    }
+  } 
+
+ .login-box {
+    width: 50%;
+    transform: translate(50%, 0);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+ }
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+
+  /* Nav user-name */
+
+
+  /* LOGIN-REG-BOX */
+
+thead {
+    padding: 0 5px;
+}
+
