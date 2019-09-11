@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
+const authentication = require('../config/auth');
+
+
 
 // require('./users');
 
-router.get('/', (req, res) => {
+router.get('/', authentication.is_login, (req, res) => {
     
     
     res.render('layouts/welcome', {

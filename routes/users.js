@@ -21,6 +21,7 @@ router.post ('/register', (req, res) => {
         errors.push({ msg: 'Please select profile image'})
         return res.status(400).render('layouts/registration', {
             title: '',
+            user: req.users,
             errors
         });
     }
@@ -89,6 +90,7 @@ router.post ('/register', (req, res) => {
     if (errors.length > 0) {
         res.render('layouts/registration', {
             title: '',
+            user: req.users,
             errors
         });
     } else {
@@ -132,7 +134,8 @@ router.post ('/register', (req, res) => {
                 } else {
                     errors.push({ msg: `Invalid file format. only '.gif', '.png', '.jpeg'`})
                     res.render('layouts/registration', {
-                        title: ''
+                        title: '',
+                        user: req.users
                     });
                 }
             }
@@ -160,8 +163,7 @@ router.post('/login', (req, res, next) => {
             if (results.length > 0) {
                 req.session.userId = results[0].id;
                 req.session.user = results[0];
-                console.log(results[0].id);    
-
+ 
                 res.redirect('/users/profile');
             } else {
                 req.flash('error_msg', 'Incorrect username and password');
@@ -169,12 +171,13 @@ router.post('/login', (req, res, next) => {
             }
             res.end();
         });
+        
     } else {
+
         req.flash('error_msg', 'Please enter username and password')
         res.redirect('/users/login');
     }
 });
-
 
 router.get('/profile', (req, res) => {
     let user = req.session.user,
@@ -186,10 +189,10 @@ router.get('/profile', (req, res) => {
 
     let query = "SELECT * FROM `users` WHERE `id` = '" +  userId +"'";
     db.query(query, (err, results, fields) => {
-        console.log(results);
+        console.log("Users result: " + results[0]);
         res.render('pages/profile', {
             title: '',
-            user: user
+            user
         });
     });
 });
