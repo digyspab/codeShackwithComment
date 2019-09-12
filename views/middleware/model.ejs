@@ -1,0 +1,40 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Are you sure..</h4>
+            </div>
+            <div class="modal-body">
+                <p>You want to block/Unlock the user</p>
+            </div>
+
+            <div class="modal-footer">
+                <!-- form -->
+                <form method="post" action="/admin/blocked">
+                    <input type="hidden" id="div1" value="" name="hiddenx">
+                    <input type="hidden" id="div2" value="" name="hiddeny">
+
+
+                    <input type="submit" name="submit" value="Confirm">
+
+                    <input type="button" data-dismiss="modal" value="Close"></button>
+                </form>
+
+                <!-- form -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function block(x, y) {
+        document.getElementById('div1').value = x;
+        document.getElementById('div2').value = y;
+    }
+</script>

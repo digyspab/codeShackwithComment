@@ -189,10 +189,9 @@ router.get('/profile', (req, res) => {
 
     let query = "SELECT * FROM `users` WHERE `id` = '" +  userId +"'";
     db.query(query, (err, results, fields) => {
-        console.log("Users result: " + results[0]);
         res.render('pages/profile', {
-            title: '',
-            user
+            title: 'User Profile',
+            user: results[0]
         });
     });
 });

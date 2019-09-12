@@ -7,9 +7,9 @@ const fileUpload = require('express-fileupload');
 
 
 const app = express();
+
 const keys = require('./config/keys');
 const db = require('./config/db');
-
 
 // Database connection
 db.connect((err) => {
@@ -31,6 +31,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 60000}
 }));
+
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(fileUpload());
