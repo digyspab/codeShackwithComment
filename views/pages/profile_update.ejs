@@ -1,0 +1,136 @@
+<% include ../index.ejs %>.
+
+<div class="container">
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+
+        <% include ../middleware/messages.ejs %>
+        <h6 class="border-bottom border-gray pb-2 mb-0 mb-5">Update Details</h6>
+
+
+
+        <form class="add-player-form" action="/users/update_profile" method="post" enctype="multipart/form-data">
+            <div class="form-row">
+                <!-- name -->
+                <div class="form-group col-md-4">
+                    <label for="name">Full Name</label>
+                    <input type="text" class="form-control" name="name" id="name" value="<%= (user.name) ? user.name : '' %>" required>
+                </div>
+
+                <!-- maritalstatus -->
+                <div class="form-group col-md-4">
+                    <label for="maritalstatus">Marital status</label>
+                    <input type="text" class="form-control" name="maritalstatus" id="maritalstatus"
+                        value="<%= user.maritalstatus %>" required>
+                </div>
+
+                <!-- hobbies -->
+                <div class="form-group col-md-4">
+                    <label for="hobbies">Hobbies</label>
+                    <select id="hobbies" name="hobbies" class="form-control" required>
+                        <option selected>Cricket</option>
+                        <option>Football</option>
+                        <option>Hockey</option>
+                        <option>Chess</option>
+                        <option>Reading Books</option>
+                        <option>Gadget Loving</option>
+                        <option>Video Game</option>
+                        <option>Walking</option>
+                        <option>Singing</option>
+                        <option>Chatting</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Gender -->
+                <div class="form-group col-md-6">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender" class="form-control" required>
+                        <option selected><%= user.gender %></option>
+                        <option>Female</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+                <!-- Date of Birth -->
+                <div class="form-group col-md-6">
+                    <label for="date">D.O.B. </label>
+                    <input type="date" class="form-control" name="dob" id="date" placeholder="dd/mm/yy"
+                        value="<%= user.dob %>" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- Contact number -->
+                <div class="form-group col-md-4">
+                    <label for="number">Contact Number</label>
+                    <input type="text" class="form-control" name="contactnumber" id="number" placeholder="Contact Number"
+                        value="<%= user.contactnumber.toString() %>" required>
+                </div>
+                <!-- House Number -->
+                <div class="form-group col-md-4">
+                    <label for="house">House No.</label>
+                    <input type="text" class="form-control" name="house" id="house" placeholder="House No. "
+                        value="<%= user.house %>" required>
+                </div>
+                <!-- Street -->
+                <div class="form-group col-md-4">
+                    <label for="street">Street</label>
+                    <input type="text" class="form-control" name="street" id="street" value="<%= user.street %>"
+                        required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- City -->
+                <div class="form-group col-md-4">
+                    <label for="city">City</label>
+                    <input type="text" class="form-control" name="city" id="city" value="<%= user.city %>" required>
+                </div>
+
+                <!-- Country -->
+                <div class="form-group col-md-4">
+                    <label for="country">Country</label>
+                    <select id="country" name="country" class="form-control" required>
+                        <option selected><%= user.country %></option>
+                        <option>India</option>
+                        <option>Pakistan</option>
+                        <option>China</option>
+                        <option>Nepal</option>
+                        <option>Bangladesh</option>
+                        <option>Sri Lanka</option>
+                        <option>Malaysia</option>
+                        <option>USA</option>
+                        <option>UK</option>
+                        <option>Canada</option>
+                    </select>
+                </div>
+
+                <!-- ZIP -->
+                <div class="form-group col-md-4">
+                    <label for="zip">Zip</label>
+                    <input type="text" class="form-control" name="zip" id="zip" value="<%= user.zip %>" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <!-- About us -->
+                <div class="form-group col-md-12">
+                    <label for="textareawrite">About us </label>
+                    <input type="text" class="form-control" name="textareawrite" id="textareawrite" placeholder="write here"
+                        value="<%= user.textareawrite %>" required>
+                </div>
+            </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-success float-right">Update Player</button>
+    </form>
+
+    <p class="text-center">Go for profile. Go <a href="/users/profile">here</a> press here.</p>
+
+
+</div>
+
+
+
+<% include ../include/footer.ejs %>

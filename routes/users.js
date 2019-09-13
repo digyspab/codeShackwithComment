@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const router = express.Router()
 
 // Registration GET Method
-router.get('/register', (req, res) => {
+router.get('/register', (req, res, next) => {
     res.render('layouts/registration', {
         title: 'Register Page',
         user: req.users
@@ -13,7 +13,7 @@ router.get('/register', (req, res) => {
 });
 
 // Registration POST Method
-router.post ('/register', (req, res) => {
+router.post ('/register', (req, res, next) => {
     // push all errors
     const errors = [];
 
@@ -154,32 +154,41 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
+    const status = req.param.status;
     let sess = req.session;
 
-    const selectUser = "SELECT * FROM users WHERE username = ? AND password = ?";
 
-    if (username && password) {
-        db.query(selectUser, [ username, password ], (err, results, fields) => {
-            if (results.length > 0) {
-                req.session.userId = results[0].id;
-                req.session.user = results[0];
- 
-                res.redirect('/users/profile');
-            } else {
-                req.flash('error_msg', 'Incorrect username and password');
+    const statusQuery = "SELECT * FROM users status = ?";
+    const selectUser = "SELECT * FROM users WHERE username = ? AND password = ? AND status = ?";
+
+
+
+            if (username && password) {
+                db.query(selectUser, [ username, password, 1 ], (err, results, fields) => {
+        
+                    if (results.length > 0) {
+                        req.session.userId = results[0].id;
+                        req.session.user = results[0];
+         
+                        res.redirect('/users/profile');
+                    } else {
+                        req.flash('error_msg', 'Incorrect username and password');
+                        res.redirect('/users/login');
+                    }
+                    res.end();
+                });
+                
+            }  else {
+        
+                req.flash('error_msg', 'Please enter username and password')
                 res.redirect('/users/login');
             }
-            res.end();
-        });
-        
-    } else {
 
-        req.flash('error_msg', 'Please enter username and password')
-        res.redirect('/users/login');
-    }
+ 
+    
 });
 
-router.get('/profile', (req, res) => {
+router.get('/profile', (req, res, next) => {
     let user = req.session.user,
     userId = req.session.userId;
 
@@ -193,6 +202,75 @@ router.get('/profile', (req, res) => {
             title: 'User Profile',
             user: results[0]
         });
+    });
+});
+
+router.get('/profile_details', (req, res, next) => {
+    let user = req.session.user,
+    userId = req.session.userId;
+
+    if(userId == null) {
+        res.redirect('/users/login');
+    }
+
+    let query = "SELECT * FROM `users` WHERE `id` = '" +  userId +"'";
+    db.query(query, (err, results, fields) => {
+        res.render('pages/profile_details', {
+            title: 'User Profile',
+            user: results[0]
+        });
+    });
+});
+
+router.get('/update_profile', (req, res, next) => {
+    let user = req.session.user,
+    userId = req.session.userId;
+
+
+    if (userId == null) {
+        res.redirect('/users/login');
+    }
+
+    let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "'"
+    db.query(query, (err, results, fields) => {
+        res.render('pages/profile_update', {
+            title: 'Profile Update',
+            user: results[0]
+        });
+    });
+});
+
+router.post('/update_profile', (req, res, next) => {
+    let user = req.session.user,
+    userId = req.session.userId;
+
+    var usersDetails = {
+        
+        "name":req.body.name,
+        "maritalstatus":req.body.maritalstatus,
+        "hobbies":req.body.hobbies,
+        "gender":req.body.gender,
+        "dob":req.body.dob,
+        "contactnumber":req.body.contactnumber,
+        "house":req.body.house,
+        "street":req.body.street,
+        "city":req.body.city,
+        "country":req.body.country,
+        "zip":req.body.zip,
+        "textareawrite":req.body.textareawrite
+    }
+
+
+    let query = "UPDATE users SET ? WHERE id = ?";
+
+    db.query(mysql.format(query), [usersDetails, userId], (err, results, fields) => {
+
+        if (err) {
+            return res.status(500).send(err);
+        } else {
+            req.flash('success_msg', 'Details updated.');
+            res.redirect('/users/profile');
+        }
     });
 });
 

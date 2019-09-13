@@ -1,17 +1,87 @@
 <% include ../index.ejs %>
 
-<div class="container">
-    <div class="my-3 p-3 bg-white rounded shadow-sm">
-        <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
-            <div class="lh-100">
-                <div class="message-box">
-                    <small> <% include ../middleware/messages.ejs %></small>
+
+
+
+<div class="container mt-5">
+
+    <% if (user) { %>
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4 mt-8">
+            <ul class="list-group mb-3">
+                <!-- Profile Image -->
+                <li class="list-group-item d-flex justify-content-between">
+                    <div class="text-success">
+                        <img src="/assets/img/profile/<%= user.avtar %>" class="rounded img-fluid" alt="Cinque Terre" width="304"
+                            height="236" alt="">
+                        <small><%= user.name %> </small>
+                </li>
+                
+            </ul>
+
+            <!-- Search-box -->
+            <form class="card p-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="serach here....">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-secondary">search</button>
+                    </div>
                 </div>
-                <h1>User Profile <u><%= user.name %></u></h1>
-                <!-- <small>Since 2011</small> -->
-            </div>
+            </form>
         </div>
+
+
+        <!-- User Details -->
+        <div class="col-md-8 order-md-1">
+            <h4 class="mb-3"><%= user.name %> you are here</h4>
+
+            <hr class="mb-4">
+            <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between bg-light">
+                        <span>User ID: </span>
+                        <strong><%= user.id %></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Username: </span>
+                        <strong><%= user.username %></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Name: </span>
+                        <strong><%= user.name %></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Email: </span>
+                        <strong><%= user.email %></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Gender: </span>
+                        <strong><%= user.gender %></strong>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Date of Birth: </span>
+                        <strong><%= user.dob.toLocaleDateString() %></strong>
+                    </li>
+
+
+                    <hr class="mb-2">
+                    
+ 
+                    
+                </ul>
+
+                <p><a class="btn btn-outline-secondary" href="/users/profile_details" role="button">See Profile</a></p>
+            </div>
+            <hr class="mb-4">
     </div>
+
+    <% } else { %>
+    <div class="my-5 p-3 bg-white rounded shadow-sm">
+        <p class="text-center">No users Found</p>
+        <% } %>
+        <!-- END FORM -->
+    </div>
+
 </div>
+<!-- </div> -->
 
 <% include ../include/footer.ejs %>

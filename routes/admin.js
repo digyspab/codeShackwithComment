@@ -103,10 +103,9 @@ router.post('/blocked', (req, res, next) => {
     let x = req.body.hiddenx;
     let y = req.body.hiddeny;
 
-    let query = mysql.format("UPDATE users SET = ? WHERE id = ?", [x, y]);
+    let query = mysql.format("UPDATE users SET status = ? WHERE id = ?", [y, x]);
 
     db.query(query, (err, results, fields) => {
-        console.log('Block: ' + JSON.stringify(results));
 
         if (err) {
             return res.status(500).send(err)
