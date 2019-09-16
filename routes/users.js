@@ -95,6 +95,7 @@ router.post ('/register', (req, res, next) => {
         });
     } else {
         const usernameQuery = "SELECT * FROM users WHERE username = '" + username + "'";
+        
         db.query(usernameQuery, (err, results, fields) => {
             if (err) {
                 return res.status(500).send(err);
@@ -158,7 +159,7 @@ router.post('/login', (req, res, next) => {
     let sess = req.session;
 
 
-    const statusQuery = "SELECT * FROM users status = ?";
+    // const statusQuery = "SELECT * FROM users status = ?";
     const selectUser = "SELECT * FROM users WHERE username = ? AND password = ? AND status = ?";
 
 

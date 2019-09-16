@@ -1,0 +1,85 @@
+<% include ../index %>
+
+<div class="container">
+    <!-- User Details -->
+    <div class="col-md-8 order-md-1">
+        <div class="my-3 p-3 bg-white rounded shadow-sm">
+
+            <div class="message-box">
+                <small> <% include ../middleware/messages.ejs %></small>
+            </div>
+
+            <h4 class="mb-3">You can change password here: </h4>
+
+            <hr class="mb-4">
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                    <span>User ID: </span>
+                    <strong><%=user_id%></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Username: </span>
+                    <strong><%= user.username %></strong>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Email: </span>
+                    <strong><%= user.email %></strong>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Password: </span>
+                    <strong><input type="submit" class="btn btn-outline-info btn-sm" id="" value="change password" data-toggle="modal" data-target="#myModal"></strong>
+                    
+                </li>
+
+                <hr class="mb-1">
+            </ul>
+        </div>
+        <hr class="mb-4">
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Change password</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                    <form method="post" action="/profile/profile_settings">
+                            <div class="form-group">
+                                <label for="password">Current Password</label>
+                                <input type="password" name="currentpassword" class="form-control" id="password"
+                                    placeholder="Enter current passsword">
+                            </div>
+                            <!-- PASSWORD -->
+                            <div class="form-group">
+                                <label for="password">New Password</label>
+                                <input type="password" name="password" class="form-control" id="password"
+                                    placeholder="New password">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirmPass">Confirm Password</label>
+                                <input type="password" name="confirmPass" class="form-control" id="confirmPass"
+                                    placeholder="Confirm Password">
+                            </div>
+
+                            <hr class="mb-1">
+                            <input type="submit" name="submit" value="Confirm" class="btn btn-outline-info btn-sm">
+                        </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+<% include ../include/footer %>

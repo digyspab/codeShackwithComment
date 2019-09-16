@@ -8,35 +8,38 @@
     <% if (user) { %>
     <div class="row">
         <div class="col-md-4 order-md-2 mb-4 mt-8">
-            <ul class="list-group mb-3">
-                <!-- Profile Image -->
-                <li class="list-group-item d-flex justify-content-between">
-                    <div class="text-success">
-                        <img src="/assets/img/profile/<%= user.avtar %>" class="rounded img-fluid" alt="Cinque Terre" width="304"
-                            height="236" alt="">
-                        <small><%= user.name %> </small>
-                </li>
-                
-            </ul>
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                <ul class="list-group mb-3">
+                    <!-- Profile Image -->
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div class="text-success">
+                            <img src="/assets/img/profile/<%= user.avtar %>" class="rounded img-fluid"
+                                alt="Cinque Terre" width="304" height="236" alt="">
+                            <small><%= user.name %> </small>
+                    </li>
 
-            <!-- Search-box -->
-            <form class="card p-2">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="serach here....">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary">search</button>
+                </ul>
+
+                <!-- Search-box -->
+                <form class="card p-2">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="serach here....">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-secondary">search</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
 
 
         <!-- User Details -->
         <div class="col-md-8 order-md-1">
-            <h4 class="mb-3"><%= user.name %> you are here</h4>
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                <h4 class="mb-3"><%= user.name %> you are here</h4>
 
-            <hr class="mb-4">
-            <ul class="list-group mb-3">
+                <hr class="mb-4">
+                <ul class="list-group mb-3">
                     <li class="list-group-item d-flex justify-content-between bg-light">
                         <span>User ID: </span>
                         <strong><%= user.id %></strong>
@@ -64,14 +67,15 @@
 
 
                     <hr class="mb-2">
-                    
- 
-                    
+
+
+
                 </ul>
 
                 <p><a class="btn btn-outline-secondary" href="/users/profile_details" role="button">See Profile</a></p>
             </div>
             <hr class="mb-4">
+        </div>
     </div>
 
     <% } else { %>

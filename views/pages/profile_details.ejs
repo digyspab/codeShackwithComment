@@ -5,86 +5,89 @@
 
 <div class="container">
 
-        <!-- User Details -->
-            <h4 class="mb-3 mt-5"><%= user.name %> Details</h4>
-            <form class="card p-2">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="serach here....">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-secondary">search</button>
-                    </div>
+    <!-- User Details -->
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <h4 class="mb-3 mt-5"><%= user.name %> Details</h4>
+        <form class="card p-2">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="serach here....">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-secondary">search</button>
                 </div>
-            </form>
+            </div>
+        </form>
+    </div>
+    <hr class="mb-4">
+    <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between bg-light">
+                <span>User ID: </span>
+                <strong><%= user.id %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Username: </span>
+                <strong><%= user.username %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Name: </span>
+                <strong><%= user.name %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Email: </span>
+                <strong><%= user.email %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Marital Status: </span>
+                <strong><%= user.maritalstatus %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Hobbies: </span>
+                <strong><%= user.hobbies %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Gender: </span>
+                <strong><%= user.gender %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Date of Birth: </span>
+                <strong><%= user.dob.toLocaleDateString() %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Contact Number: </span>
+                <strong><%= user.contactnumber %></strong>
+            </li>
 
-            <hr class="mb-4">
-            <ul class="list-group mb-3">
-                    <li class="list-group-item d-flex justify-content-between bg-light">
-                        <span>User ID: </span>
-                        <strong><%= user.id %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Username: </span>
-                        <strong><%= user.username %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Name: </span>
-                        <strong><%= user.name %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Email: </span>
-                        <strong><%= user.email %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Marital Status: </span>
-                        <strong><%= user.maritalstatus %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Hobbies: </span>
-                        <strong><%= user.hobbies %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Gender: </span>
-                        <strong><%= user.gender %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Date of Birth: </span>
-                        <strong><%= user.dob.toLocaleDateString() %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Contact Number: </span>
-                        <strong><%= user.contactnumber %></strong>
-                    </li>
+            <hr class="mb-2">
+            <li class="list-group-item d-flex justify-content-between">
+                <span>House: </span>
+                <strong><%= user.house %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Street: </span>
+                <strong><%= user.street %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>City: </span>
+                <strong><%= user.city %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Country: </span>
+                <strong><%= user.country %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Zip Code: </span>
+                <strong><%= user.zip %></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>About US: </span>
+                <strong><%= user.textareawrite %></strong>
+            </li>
 
-                    <hr class="mb-2">
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>House: </span>
-                        <strong><%= user.house %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Street: </span>
-                        <strong><%= user.street %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>City: </span>
-                        <strong><%= user.city %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Country: </span>
-                        <strong><%= user.country %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>Zip Code: </span>
-                        <strong><%= user.zip %></strong>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between">
-                        <span>About US: </span>
-                        <strong><%= user.textareawrite %></strong>
-                    </li>
-                    
-                </ul>
+        </ul>
 
-                <p><a class="btn btn-outline-secondary" href="/users/update_profile" role="button">Edit profile</a></p>
-            <hr class="mb-4">
+        <p><a class="btn btn-outline-secondary" href="/users/update_profile" role="button">Edit profile</a></p>
+    </div>
+    <hr class="mb-4">
 
 </div>
 <!-- </div> -->
