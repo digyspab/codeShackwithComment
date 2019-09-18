@@ -1,9 +1,23 @@
 <% include ../admin.ejs %>
 
-
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input.typeahead').typeahead({
+            name: 'countries',
+            remote: 'http://localhost:5000/admin/dashboard/search?key=%QUERY',
+            limit: 10
+        });
+    });
+</script>
 
 <main role="main" class="container">
-    <div class="my-5 p-3 bg-white rounded shadow-sm">
+    <div class="my-2 p-3 bg-white rounded shadow-sm">
+        <h4 class="mb-3 mt-5">Search here</h4>
+
+                    <input class="typeahead tt-query" spellcheck="false" autocomplete="off" name="typeahead" type="text" />
+ 
+    </div>
+    <div class="p-3 bg-white rounded shadow-sm">
 
         <% if (user.length > 0) { %>
         <h2>Admin Dashboard</h2>
@@ -69,12 +83,14 @@
 
                     <% if(user.status == 1){ %>
                     <td>
-                        <input type="submit" class="button" id="<%= user.id %>" value="Block" data-toggle="modal" data-target="#myModal" onclick="block(<%= user.id %>,0)">
+                        <input type="submit" class="button" id="<%= user.id %>" value="Block" data-toggle="modal"
+                            data-target="#myModal" onclick="block(<%= user.id %>,0)">
                     </td>
 
                     <%} else { %>
                     <td>
-                        <input type="submit" class="button1" id="<%= user.id %>" value="Unblock" data-toggle="modal" data-target="#myModal" onclick="block(<%= user.id %>,1)">
+                        <input type="submit" class="button1" id="<%= user.id %>" value="Unblock" data-toggle="modal"
+                            data-target="#myModal" onclick="block(<%= user.id %>,1)">
                     </td>
                     <%  } %>
                 </tr>
@@ -89,7 +105,6 @@
         <!-- END FORM -->
     </div>
 </main>
-
 
 
 <% include ../middleware/model %>

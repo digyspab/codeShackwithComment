@@ -62,7 +62,7 @@ router.post ('/register', (req, res, next) => {
     }
 
     if (username.length < 5 || username.length > 15) {
-        errors.push({ msg: 'username in between 5-15 characters'})
+        errors.push({ msg: 'username in between 5-15 characters'});
     }
 
     if (!illegalChars.test(username)) {

@@ -15,8 +15,26 @@ router.get('/login', (req, res) => {
 });
 
 
+// Admin Dashboard GET route
+router.get('/dashboard', (req, res, next) => {
+    let user = req.session.user,
+    userId = req.session.userId;
+
+    if(userId == null) {
+        res.redirect('/admin/login');
+    }
+
+    let query = "SELECT * FROM `users` ORDER BY id ASC";
+    db.query(query, (err, results, fields) => {
+        res.render('controllers/dashboard', {
+            title: 'User Info',
+            user: results
+        });
+    });
+});
+
 // Login POST Route
-router.post('/login', (req, res) => {
+router.post('/dashboard', (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     let sess = req.session;
@@ -47,23 +65,7 @@ router.post('/login', (req, res) => {
     
 });
 
-// Admin Dashboard GET route
-router.get('/dashboard', (req, res, next) => {
-    let user = req.session.user,
-    userId = req.session.userId;
 
-    if(userId == null) {
-        res.redirect('/admin/login');
-    }
-
-    let query = "SELECT * FROM `users` ORDER BY id ASC";
-    db.query(query, (err, results, fields) => {
-        res.render('controllers/dashboard', {
-            title: 'User Info',
-            user: results
-        });
-    });
-});
 
 
 // Admin delete user
@@ -125,5 +127,20 @@ router.get('logout', (req, res, next) => {
         }
     });
 });
+
+
+router.get('/dashboard/search', function(req,res){
+    // let searchQuery = 'SELECT name from users where name like "%'+req.query.key+'%"';
+    let searchQuery = 'SELECT name, username, email, avtar FROM users WHERE name LIKE "%' + req.query.key + '%" OR username LIKE "%' + req.query.key + '%" OR username LIKE "%' + req.query.key + '%" OR avtar LIKE "%' + req.query.key + '%" ';                                  
+    db.query(searchQuery, function(err, rows, fields) {
+
+        if (err) throw err;
+        var data=[];
+        for(i=0;i<rows.length;i++) {
+            data.push(`${rows[i].name} ,${rows[i].email}, ${rows[i].avtar}`);
+          }
+          res.end(JSON.stringify(data));
+        });
+    });
 
 module.exports = router;
