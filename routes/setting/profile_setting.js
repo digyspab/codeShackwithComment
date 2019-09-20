@@ -33,7 +33,6 @@ router.get('/profile_settings', (req, res, next) => {
 
 router.post('/profile_settings', (req, res, next) => {
 
-console.log("dasdasdasd");
     let user = req.session.user;
     let userId = req.session.userId;
 
@@ -77,6 +76,22 @@ console.log("dasdasdasd");
     });
         
     }
+
+});
+
+router.post('/profile/avtar/:id', (req, res, next) => {
+
+    let user = req.session.user;
+    let userId = req.session.userId;
+
+    let username = req.user.username;
+
+    let date = new Date();
+    let getTime = date.getTime();
+
+    
+    console.log(`username: ${username}, getTime: ${getTime}:= ${username}.${getTime}`)
+
 
 });
 

@@ -1,20 +1,12 @@
 <% include ../admin.ejs %>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('input.typeahead').typeahead({
-            name: 'countries',
-            remote: 'http://localhost:5000/admin/dashboard/search?key=%QUERY',
-            limit: 10
-        });
-    });
-</script>
 
 <main role="main" class="container">
     <div class="my-2 p-3 bg-white rounded shadow-sm">
         <h4 class="mb-3 mt-5">Search here</h4>
 
-                    <input class="typeahead tt-query" spellcheck="false" autocomplete="off" name="typeahead" type="text" />
+                <input class="typeahead tt-query" spellcheck="false" autocomplete="off" name="typeahead" type="text" />
+                
  
     </div>
     <div class="p-3 bg-white rounded shadow-sm">
@@ -105,6 +97,19 @@
         <!-- END FORM -->
     </div>
 </main>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('input.typeahead').typeahead({
+            name: 'countries',
+            remote: 'http://localhost:5000/admin/dashboard/search?key=%QUERY',
+            limit: 10
+        });
+    });
+</script>
+
+
+
 
 
 <% include ../middleware/model %>

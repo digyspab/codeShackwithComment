@@ -18,9 +18,9 @@ router.get('/login', (req, res) => {
 // Admin Dashboard GET route
 router.get('/dashboard', (req, res, next) => {
     let user = req.session.user,
-    userId = req.session.userId;
+        userId = req.session.userId;
 
-    if(userId == null) {
+    if (userId == null) {
         res.redirect('/admin/login');
     }
 
@@ -53,7 +53,7 @@ router.post('/dashboard', (req, res) => {
                     user: results
                 });
             } else {
-                req.flash( 'error_msg', 'You are not Admin' );
+                req.flash('error_msg', 'You are not Admin');
                 res.redirect('/admin/login');
             }
             res.end();
@@ -62,7 +62,7 @@ router.post('/dashboard', (req, res) => {
         req.flash('error_msg', 'Please fill required field');
         res.redirect('/admin/login');
     }
-    
+
 });
 
 
@@ -79,9 +79,8 @@ router.get('/delete/:id', (req, res, next) => {
         if (err) {
             return res.status(500).send(err);
         }
-        
+
         let image = results[0].avtar;
-        console.log('Delete user: ' + image);
 
         fs.unlink(`public/assets/img/profile/${image}`, (err) => {
             if (err) {
@@ -96,7 +95,7 @@ router.get('/delete/:id', (req, res, next) => {
                 res.redirect('/admin/dashboard');
             });
         });
-    });    
+    });
 });
 
 
@@ -129,18 +128,20 @@ router.get('logout', (req, res, next) => {
 });
 
 
-router.get('/dashboard/search', function(req,res){
+router.get('/dashboard/search', function (req, res) {
     // let searchQuery = 'SELECT name from users where name like "%'+req.query.key+'%"';
-    let searchQuery = 'SELECT name, username, email, avtar FROM users WHERE name LIKE "%' + req.query.key + '%" OR username LIKE "%' + req.query.key + '%" OR username LIKE "%' + req.query.key + '%" OR avtar LIKE "%' + req.query.key + '%" ';                                  
-    db.query(searchQuery, function(err, rows, fields) {
+    let searchQuery = 'SELECT name, username, email, avtar FROM users WHERE name LIKE "%' + req.query.key + '%" OR username LIKE "%' + req.query.key + '%" OR username LIKE "%' + req.query.key + '%" OR avtar LIKE "%' + req.query.key + '%" ';
+    db.query(searchQuery, function (err, rows, fields) {
 
         if (err) throw err;
-        var data=[];
-        for(i=0;i<rows.length;i++) {
-            data.push(`${rows[i].name} ,${rows[i].email}, ${rows[i].avtar}`);
-          }
-          res.end(JSON.stringify(data));
-        });
+        var data = [];
+        for (i = 0; i < rows.length; i++) {
+            data.push(`${rows[i].name} ${rows[i].email} ${rows[i].avtar}`);
+        }
+        res.end(JSON.stringify(data));
     });
+});
+
+
 
 module.exports = router;
