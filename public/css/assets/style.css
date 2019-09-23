@@ -103,3 +103,19 @@ thead {
         margin: 0;
     }
 
+
+    /* Profile */
+#user_name {
+    text-transform: capitalize;
+}
+
+#user_name:hover {
+    color: red;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.font_awsome {
+    font-size: 20px;
+    padding: 0 35px 0 0;
+}

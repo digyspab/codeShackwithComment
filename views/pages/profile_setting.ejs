@@ -9,7 +9,7 @@
                 <small> <% include ../middleware/messages.ejs %></small>
             </div>
 
-            <h4 class="mb-3">You can change password here: </h4>
+            <h4 class="mb-3">You can change password and delete account: </h4>
 
             <hr class="mb-4">
             <ul class="list-group mb-3">
@@ -31,6 +31,11 @@
                     <strong><input type="submit" class="btn btn-outline-info btn-sm" id="" value="change password" data-toggle="modal" data-target="#myModal"></strong>
                     
                 </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Delete account: </span>
+                    <strong><input type="submit" class="btn btn-outline-danger btn-sm" id="" value="Delete account" data-toggle="modal" data-target="#password_reset" style="padding: 3px 15px"></strong>
+                    
+                </li>
 
                 <hr class="mb-1">
             </ul>
@@ -39,7 +44,11 @@
     </div>
 </div>
 
-<!-- The Modal -->
+
+
+<!-- =========================== MODELS ===================================================== -->
+<!-- ======================================================================================== -->
+<!-- password reset model -->
 <div class="modal fade" id="myModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -72,6 +81,38 @@
 
                             <hr class="mb-1">
                             <input type="submit" name="submit" value="Confirm" class="btn btn-outline-info btn-sm">
+                    </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!-- DELETE Account model -->
+<div class="modal fade" id="password_reset">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure?</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                    <form method="post" action="/profile/delete/<%= user.id %>">
+                            <div class="form-group">
+                                <label for="password">Current Password</label>
+                                <input type="password" name="currentpassword" class="form-control" id="password"
+                                    placeholder="Enter current passsword">
+                            </div>
+                            
+                            <hr class="mb-1">
+                            <input type="submit" name="submit" value="Confirm" class="btn btn-outline-info btn-sm">
+                            <input type="button" data-dismiss="modal" value="Close" class="btn btn-outline-secondary btn-sm">
                     </form>
             </div>
 
