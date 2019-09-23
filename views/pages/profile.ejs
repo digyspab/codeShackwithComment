@@ -3,7 +3,7 @@
 
 
 
-<div class="container mt-5">
+<div class="container mt-3">
 
     <% if (user) { %>
     <div class="row">
@@ -11,31 +11,32 @@
             <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <ul class="list-group mb-1">
                     <!-- user details -->
-                <footer class="blockquote-footer">
+                    <footer class="blockquote-footer">
                         <small>
-                            Profile of <cite title="<%= user.email %>" class="text-success" id="user_name"><%= user.name %> </cite>
+                            Profile of <cite title="<%= user.email %>" class="text-success"
+                                id="user_name"><%= user.name %> </cite>
                         </small>
-                </footer>
+                    </footer>
                     <!-- Profile Image -->
-                    <li class="list-group-item d-flex justify-content-between">
-                        <div class="text-success">
+                    <li class="list-group-item">
+                        <div class="d-flex justify-content-between">
                             <img src="/assets/img/profile/<%= user.avtar %>" class="rounded img-fluid"
-                                alt="Cinque Terre" width="304" height="236" alt="">
-                            <small class="d-block text-right mt-3">
+                                alt="Cinque Terre" width="304" height="236" alt="<%= user.name %>">
+                            
+                        </div>
+                        <small class="d-block text-right mt-3">
                                 <button type="submit" class="btn btn-link btn-sm" data-toggle="modal"
                                     data-target="#avtarModel">change avtar</button>
                             </small>
-                        </div>
                     </li>
                 </ul>
 
-                
 
-                <ul class="list-group-item list-group mb-3 mt-3">
+
+                <ul class="list-group-item list-group mb-1 mt-3">
                     <li class=" d-flex justify-content-between bg-light">
                         <div>
                             <h6 class="my-0">User ID: </h6>
-                            <!-- <small class="text-muted">Brief description</small> -->
                         </div>
                         <span class="text-muted"><%= user.id %></span>
                     </li>
@@ -74,16 +75,23 @@
                 <ul class="list-group mb-2">
                     <li class="justify-content-between list-group-item d-flex  bg-light">
                         <div>
-                        <a href="#" class="font_awsome" data-toggle="tooltip" data-placement="top" title="post status"><i class="fa fa-camera"></i></a>
-                        <a href="#" class="font_awsome" data-toggle="tooltip" data-placement="top" title="see gallery"><i class="fa fa-pencil-square-o"></i></a>
-                        <a href="/users/profile_details" class="font_awsome" data-toggle="tooltip" data-placement="top" title="see profile"><i class="fa fa-vcard"></i></a>
-                    </div>
-                    <span class="text-muted blockquote-footer">free to post</span>
+                            <a href="#statusPsotTextarea" class="font_awsome" data-toggle="tooltip" data-placement="top"
+                                        title="post status"><i class="fa fa-camera"></i></a>
+                            
+                            <a href="#" class="font_awsome" data-toggle="tooltip" data-placement="top"
+                                title="see gallery"><i class="fa fa-pencil-square-o"></i></a>
+                            <a href="/users/profile_details" class="font_awsome" data-toggle="tooltip"
+                                data-placement="top" title="see profile"><i class="fa fa-vcard"></i></a>
+                        </div>
+                        <span class="text-muted blockquote-footer">free to post</span>
                     </li>
 
-                    <li class="list-group-item d-flex justify-content-between">
-                        <!-- <span>Username: </span> -->
-                        <!-- <strong><%= user.username %></strong> -->
+                    <li class="list-group-item">
+                        <form action="/users/register" method="POST">
+                            <div class="form-group">
+                                <textarea class="form-control" id="statusPsotTextarea" rows="5" placeholder="write what you think"></textarea>
+                            </div>
+                        </form>
                     </li>
 
 
@@ -142,7 +150,7 @@
 
 <script>
     let a = document.getElementById('user_name').textContent;
-   a =  a.toUpperCase();
+    a = a.toUpperCase();
 </script>
 
 <% include ../include/footer.ejs %>
