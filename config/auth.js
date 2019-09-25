@@ -2,9 +2,12 @@
 const Auth = {
     is_login: (req, res, next) => {
         if (!req.session.is_login) {
-            return res.redirect('/users/profile');
-        } 
-        next();
+             res.redirect('/users/profile');
+        } else{
+             res.redirect('/users/login');
+
+        }
+        return next();
     },
 
     is_admin: (req, res, next) => {

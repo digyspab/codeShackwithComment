@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
+const logger = require('morgan');
 
 
 const app = express();
@@ -32,6 +33,7 @@ app.use(session({
     // cookie: { maxAge: 60000}
 }));
 
+app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(bodyParser.json());
 app.use(fileUpload());

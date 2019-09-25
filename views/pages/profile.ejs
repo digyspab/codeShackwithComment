@@ -7,7 +7,7 @@
 
     <% if (user) { %>
     <div class="row">
-        <div class="col-md-4 order-md-2 mb-4 mt-8">
+        <div class="col-md-4 order-md-1 mt-8">
             <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <ul class="list-group mb-1">
                     <!-- user details -->
@@ -22,17 +22,17 @@
                         <div class="d-flex justify-content-between">
                             <img src="/assets/img/profile/<%= user.avtar %>" class="rounded img-fluid"
                                 alt="Cinque Terre" width="304" height="236" alt="<%= user.name %>">
-                            
+
                         </div>
                         <small class="d-block text-right mt-3">
-                                <button type="submit" class="btn btn-link btn-sm" data-toggle="modal"
-                                    data-target="#avtarModel">change avtar</button>
-                            </small>
+                            <button type="submit" class="btn btn-link btn-sm" data-toggle="modal"
+                                data-target="#avtarModel">change avtar</button>
+                        </small>
                     </li>
                 </ul>
 
 
-
+                <!-- little information about user -->
                 <ul class="list-group-item list-group mb-1 mt-3">
                     <li class=" d-flex justify-content-between bg-light">
                         <div>
@@ -63,8 +63,8 @@
         </div>
 
 
-        <!-- User Details -->
-        <div class="col-md-8 order-md-1">
+        <!-- POST  -->
+        <div class="col-md-8 order-md-2">
             <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <div class="message-box">
                     <small> <% include ../middleware/messages.ejs %></small>
@@ -75,11 +75,11 @@
                 <ul class="list-group mb-2">
                     <li class="justify-content-between list-group-item d-flex  bg-light">
                         <div>
-                            <a href="#statusPsotTextarea" class="font_awsome" data-toggle="tooltip" data-placement="top"
-                                        title="post status"><i class="fa fa-camera"></i></a>
-                            
+                            <a href="#post" class="font_awsome" data-toggle="tooltip" data-placement="top"
+                                title="post status"><i class="fa fa-pencil-square-o"></i></a>
+
                             <a href="#" class="font_awsome" data-toggle="tooltip" data-placement="top"
-                                title="see gallery"><i class="fa fa-pencil-square-o"></i></a>
+                                title="see gallery"><i class="fa fa-camera"></i></a>
                             <a href="/users/profile_details" class="font_awsome" data-toggle="tooltip"
                                 data-placement="top" title="see profile"><i class="fa fa-vcard"></i></a>
                         </div>
@@ -87,65 +87,68 @@
                     </li>
 
                     <li class="list-group-item">
-                        <form action="/users/register" method="POST">
+                        <form action="/users/profile/post" method="POST">
                             <div class="form-group">
-                                <textarea class="form-control" id="statusPsotTextarea" rows="5" placeholder="write what you think"></textarea>
+                                <textarea class="form-control" id="post" rows="5" placeholder="write what you think"
+                                    name="post"></textarea>
                             </div>
+                            <button type="submit" class="btn btn-primary btn-sm"
+                                style="padding: 1px 20px;">post</button>
                         </form>
                     </li>
-
-
-                    <hr class="mb-2">
                 </ul>
             </div>
-            <hr class="mb-4">
+
+          
         </div>
     </div>
+
+
+
+<!-- //////////////////    MODAL AVTAR      //////////////////////////////// -->
+<!-- The Modal -->
+<div class="modal fade" id="avtarModel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">avtar change</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+    
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form method="post" action="/profile/avtar/<%= user.user_ID %>" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <img src="../../image/profile.jpg" class="rounded mx-auto d-block" alt="..." width="250"
+                                height="300">
+                        </div>
+                        <div class="form-group">
+                            <label for="avtar">Browse image</label>
+                            <input type="file" name="avtar" class="form-control-file" id="avtar">
+                        </div>
+    
+                        <hr class="mb-1">
+                        <input type="submit" name="submit" value="Confirm" class="btn btn-outline-info btn-sm">
+                    </form>
+                </div>
+    
+    
+            </div>
+        </div>
+    </div>
+
 
     <% } else { %>
     <div class="my-5 p-3 bg-white rounded shadow-sm">
         <p class="text-center">No users Found</p>
         <% } %>
-        <!-- END FORM -->
-    </div>
-
-</div>
-<!-- </div> -->
-
-
-<!-- The Modal -->
-<div class="modal fade" id="avtarModel">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">avtar change</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <!-- Modal body -->
-
-            <div class="modal-body">
-                <form method="post" action="/profile/avtar/<%= user.id %>" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <img src="../../image/profile.jpg" class="rounded mx-auto d-block" alt="..." width="250"
-                            height="300">
-                    </div>
-                    <div class="form-group">
-                        <label for="avtar">Browse image</label>
-                        <input type="file" name="avtar" class="form-control-file" id="avtar">
-                    </div>
-
-                    <hr class="mb-1">
-                    <input type="submit" name="submit" value="Confirm" class="btn btn-outline-info btn-sm">
-                </form>
-            </div>
-
-
-        </div>
     </div>
 </div>
+
+
+
 
 
 <script>
