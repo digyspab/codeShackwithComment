@@ -16,12 +16,12 @@ router.get('/', authentication.is_login, (req, res) => {
     });
 });
 
-router.all('*', (req, res, next) => {
+/* router.all('*', (req, res, next) => {
     res.render('middleware/error_page.ejs', {
         title: 'Page not found'
     });
 });
-
+ */
 
 
 module.exports = router;

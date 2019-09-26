@@ -33,7 +33,7 @@ router.get('/profile_settings', (req, res, next) => {
 
 });
 
-// POST methdo of profile
+// POST method for password resset
 router.post('/profile_settings', (req, res, next) => {
 
     let user = req.session.user;
@@ -64,7 +64,7 @@ router.post('/profile_settings', (req, res, next) => {
 
                     } else {
                         req.flash('success_msg', 'Password changed');
-                        res.redirect('/profile/profile_settings');
+                        res.redirect('/users/login');
                     }
                 });
 

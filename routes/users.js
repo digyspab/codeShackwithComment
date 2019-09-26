@@ -200,65 +200,31 @@ router.get('/profile', (req, res) => {
 
     // let query_with_post = "SELECT users.*, posts_content.* FROM `users`, `posts_content` WHERE users.id = '" +  userId + "' AND posts_content.user_ID = '" + userId + "'";
     let query_with_post = "SELECT users.*, posts_content.* FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID where users.id = '" + userId + "' ";
+    let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "'";
 
-    db.query(query_with_post, (err, results, fields) => {
+    db.query(query, (err, results, fields) => {
 
+        
+        db.query(query_with_post, (err, resultsPost, fields) => {
 
-        if(results.length == 0){
-
-
-
-            res.render('pages/profile', {
-                title: 'User Profile',
-                user: results[0],
-                // post: ''
-            });
-        }
-    
-        results.forEach((result, index) => {
-            console.log(result, result.post ,typeof result);
-
-            if (!result.post) {
-                let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "'";
-                db.query(query, (err, results) => {
-
-                    console.log('results: ' + JSON.stringify(results[0]))
-    
-                    res.render('pages/profile', {
-                        title: 'User Profile',
-                        user: results,
-                        // post: ''
-                    });
-                });
-    
-            } else{
-                console.log('results with post in else: ' + JSON.stringify(results[0]));
+            if (Object.keys(resultsPost).length === 0) {
+                console.log('if');
                 res.render('pages/profile', {
-                    title: 'User Profile',
+                    title: 'Profile Page',
                     user: results[0],
-                    // post: results
+                });
+            } else {
+                console.log('else');
+                res.render('pages/profile', {
+                    title: 'Profile Page',
+                    user: resultsPost[0],
+                    post: resultsPost,
                 });
             }
-            
-        }) // forEach
-        
+        });
     });
 });
 
-/* router.post('/profile/post', (req, res, next) => {
-    let user = req.session.user,
-    userId = req.session.userId,
-    user_ID = userId;
-
-    if (userId == null) {
-        res.redirect('/users/login');
-    }
-
-    let poststatus = "INSERT INTO posts_content (post) VALUES (?)";
-    db.query(poststatus, [req.body.post], (err, results, fields) => {
-        res.redirect('/users/profile');
-    });
-}); */
 
 // GET profile-details
 router.get('/profile_details', (req, res, next) => {
