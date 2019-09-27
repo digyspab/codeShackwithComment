@@ -145,6 +145,7 @@ router.post('/register', (req, res, next) => {
 
 });
 
+// logn GET method
 router.get('/login', (req, res, next) => {
     res.render('layouts/login', {
         title: 'Login Page',
@@ -152,6 +153,7 @@ router.get('/login', (req, res, next) => {
     });
 });
 
+// login POST method
 router.post('/login', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -189,17 +191,17 @@ router.post('/login', (req, res, next) => {
     }
 });
 
+// GET profile and show all post
 router.get('/profile', (req, res) => {
     let user = req.session.user,
         userId = req.session.userId;
-    //  let user_ID = userId;
 
     if (userId == null) {
         res.redirect('/users/login');
     }
 
-    // let query_with_post = "SELECT users.*, posts_content.* FROM `users`, `posts_content` WHERE users.id = '" +  userId + "' AND posts_content.user_ID = '" + userId + "'";
-    let query_with_post = "SELECT users.*, posts_content.* FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID where users.id = '" + userId + "' ";
+    // let query = "SELECT users.*, posts_content.* FROM `users`, `posts_content` WHERE users.id = '" +  userId + "' AND posts_content.user_ID = '" + userId + "' ORDER BY date DESC ";
+    let query_with_post = "SELECT users.*, posts_content.* FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID where users.id = '" + userId + "' ORDER BY date DESC";
     let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "'";
 
     db.query(query, (err, results, fields) => {
@@ -208,13 +210,11 @@ router.get('/profile', (req, res) => {
         db.query(query_with_post, (err, resultsPost, fields) => {
 
             if (Object.keys(resultsPost).length === 0) {
-                console.log('if');
                 res.render('pages/profile', {
                     title: 'Profile Page',
                     user: results[0],
                 });
             } else {
-                console.log('else');
                 res.render('pages/profile', {
                     title: 'Profile Page',
                     user: resultsPost[0],
@@ -225,6 +225,67 @@ router.get('/profile', (req, res) => {
     });
 });
 
+
+// POST status
+router.post('/profile/post/:id', (req, res, next) => {
+    let user = req.session.user,
+    userId = req.session.userId
+
+    let post = req.body.post;
+
+    let query = "INSERT INTO `posts_content` ( `user_ID`, `post`) VALUES (?, ?) ;";
+    db.query(query, [userId, post], (err, results, fields) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.redirect('/users/profile');
+        }
+    });
+});
+
+// GET delete all posts of users
+router.get('/profile/all_posts/delete/:id', (req, res, next) => {
+    let user = req.session.user,
+        userId = req.session.userId;
+
+    let deletePost = "DELETE FROM `posts_content` WHERE user_ID = '" + userId + "'";
+    if(!userId) {
+        return res.redirect('/users/login');
+    }
+
+    db.query(deletePost, (err, results, fields) => {
+        if(err) {
+            res.status(500).send(err);
+        } else {
+            res.redirect('/users/profile');
+        }
+    });
+});
+
+// GET delete one by one posts of users
+router.get('/profile/post/delete/:id', (req, res, next) => {
+    let user = req.session.user,
+    userId = req.session.userId;
+
+    let id = req.params.id;
+
+    if(!userId) {
+        return res.redirect('/users/login');
+    }
+
+        let deletePost = "DELETE FROM posts_content WHERE user_ID = '" + userId + "' AND id = '" + id  + "' ";
+
+        db.query(deletePost, (err, onepost) => {
+
+            if(err) {
+                console.log('one post not delete');
+                res.status(404).send(err);
+            } else {
+                console.log('one post delete');
+                res.redirect('/users/profile');
+            }
+        });
+});
 
 // GET profile-details
 router.get('/profile_details', (req, res, next) => {
@@ -244,6 +305,7 @@ router.get('/profile_details', (req, res, next) => {
     });
 });
 
+// GET update profile method
 router.get('/update_profile', (req, res, next) => {
     let user = req.session.user,
         userId = req.session.userId;
@@ -262,6 +324,7 @@ router.get('/update_profile', (req, res, next) => {
     });
 });
 
+// POST update profile method
 router.post('/update_profile', (req, res, next) => {
     let user = req.session.user,
         userId = req.session.userId;
@@ -296,6 +359,8 @@ router.post('/update_profile', (req, res, next) => {
     });
 });
 
+
+// GET logout method
 router.get('/logout', (req, res, next) => {
     req.session.destroy((err) => {
         if (err) throw err;

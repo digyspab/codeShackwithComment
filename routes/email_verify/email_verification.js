@@ -91,7 +91,6 @@ router.get('/verify', (req, res, next) => {
 
 
 
-
 // create expiration date
 /* let expires = new Date();
 expires.setHours(expires.getHours() + 6);

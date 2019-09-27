@@ -64,7 +64,7 @@
         </div>
 
 
-        <!-- POST  -->
+        <!-- Write your post  -->
         <div class="col-md-8 order-md-2">
             <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <div class="message-box">
@@ -88,27 +88,35 @@
                     </li>
 
                     <li class="list-group-item">
-                        <form action="/users/profile/post" method="POST">
+                        <form action="/users/profile/post/<%= user.id %>" method="POST">
                             <div class="form-group">
                                 <textarea class="form-control" id="post" rows="5" placeholder="write what you think"
                                     name="post"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm"
                                 style="padding: 1px 20px;">post</button>
+
+                                <% if(user.post) { %>
+                                <a href="/users/profile/all_posts/delete/<%= user.id %>"><small title="delete all post" style="padding-left: 5px;"><i class="fa fa-bomb" style="font-size:24px"></i></small></a>
+                                <% } %>
                         </form>
                     </li>
                 </ul>
             </div>
 
             
-                <!-- All Post -->
+                <!-- show All Post -->
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <p class="border-bottom border-gray pb-2 mb-2">Comment display</p>
+                <p class="border-bottom border-gray pb-2 mb-2">All your posts</p>
+                
                 <% if(user.post) { %>
                 <% post.forEach((user, index) => { %> 
+                
                     <div class="card  mb-2">
                         <div class="card-body">
                             <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img" alt="<%= user.username %>" width="30px" height="30px"><span class="border-bottom border-black pb-1 mb-0 pl-1"> <%= user.name %></span>
+                            <small class="pull-right"><i class="fa fa-edit"></i></small>
+                            <small class="pull-right"><a href="/users/profile/post/delete/<%= user.id %>"><i class="fa fa-remove"></i></a></small>
                             <br>
                             <p class="card-text pl-4"> <%= user.post %></p>
                             <small class="pl-4">Date: <%= user.date.toLocaleDateString() %></small>

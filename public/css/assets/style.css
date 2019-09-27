@@ -110,7 +110,6 @@ thead {
 }
 
 #user_name:hover {
-    color: red;
     cursor: pointer;
     font-size: 0.8rem;
 }
@@ -118,4 +117,23 @@ thead {
 .font_awsome {
     font-size: 20px;
     padding: 0 35px 0 0;
+}
+
+.font_awsome_post {
+    cursor: pointer;
+    color: grey;
+    padding: 0 5px;
+}
+
+.fa-edit:hover {
+    color: green;
+}
+
+.fa-remove:hover, .fa-bomb:hover {
+    color: red;
+}
+
+.fa-edit, .fa-remove, .fa-bomb {
+    color: grey;
+    padding-left: 5px;
 }
