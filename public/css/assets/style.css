@@ -137,3 +137,39 @@ thead {
     color: grey;
     padding-left: 5px;
 }
+
+.fa-edit, .fa-bomb {
+    padding-left: 8px;
+}
+
+
+/* search */
+/* ////////////////////////// */
+#result {
+	position: absolute;
+	width: 100%;
+	max-width: 100%;
+	cursor: pointer;
+	overflow-y: auto;
+	max-height: 400px;
+	box-sizing: border-box;
+	z-index: 1001;
+}
+.link-class:hover{
+	background-color:#f1f1f1;
+}
+
+
+/* table */
+.numbering {
+    counter-increment: rowNumber;
+    content: counter(rowNumber);
+}
+
+@media (min-width: 768px) { 
+	#result {
+		width: 98%;
+	}
+}
+
+

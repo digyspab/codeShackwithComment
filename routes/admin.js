@@ -28,7 +28,7 @@ router.get('/dashboard', (req, res, next) => {
     db.query(query, (err, results, fields) => {
         res.render('controllers/dashboard', {
             title: 'User Info',
-            user: results
+            user: results,
         });
     });
 });

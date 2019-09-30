@@ -206,19 +206,20 @@ router.get('/profile', (req, res) => {
 
     db.query(query, (err, results, fields) => {
 
-        
+        var Checkpost='';
         db.query(query_with_post, (err, resultsPost, fields) => {
-
             if (Object.keys(resultsPost).length === 0) {
                 res.render('pages/profile', {
                     title: 'Profile Page',
                     user: results[0],
+                    Checkpost:"nopost",
                 });
             } else {
                 res.render('pages/profile', {
                     title: 'Profile Page',
                     user: resultsPost[0],
                     post: resultsPost,
+                    Checkpost:"",
                 });
             }
         });

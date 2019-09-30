@@ -2,23 +2,17 @@
 
 
 <main role="main" class="container">
-    <div class="my-2 p-3 bg-white rounded shadow-sm">
-        <h4 class="mb-3 mt-5">Search here</h4>
-
-                <input class="typeahead tt-query" spellcheck="false" autocomplete="off" name="typeahead" type="text" />
-                
- 
-    </div>
     <div class="p-3 bg-white rounded shadow-sm">
 
         <% if (user.length > 0) { %>
         <h2>Admin Dashboard</h2>
         <!-- START FORM -->
 
-        <table class="table table-hovered table-bordered table-responsive">
+        <table class="table table-hovered table-bordered table-responsive" id="userDetails">
             <caption>Hi Admin </caption>
             <thead class="thead-dark" width='110%' ;>
                 <tr>
+                    <th scope="col">count</th>
                     <th scope="col">ID</th>
                     <th scope="col">Image</th>
                     <th scope="col">Name</th>
@@ -44,8 +38,10 @@
                 <% user.forEach((user, index) => { %>
 
                 <tr>
+                    <th scope="row" class="numbering">  </th>
                     <th scope="row"> <%= user.id%> </th>
-                    <td><img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img" alt="<%= user.username %>" height="55px"></td>
+                    <td><img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img"
+                            alt="<%= user.username %>" height="55px"></td>
                     <td> <%= user.name%> </td>
                     <td> <%= user.username%> </td>
                     <td> <%= user.email %> </td>
@@ -97,16 +93,14 @@
     </div>
 </main>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('input.typeahead').typeahead({
-            name: 'countries',
-            remote: 'http://localhost:5000/admin/dashboard/search?key=%QUERY',
-            limit: 10
-        });
-    });
-</script>
 
+
+<script>
+   $(document).ready(function(){
+       $("#userDetails").DataTable();
+      
+   });
+</script>
 
 
 

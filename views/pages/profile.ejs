@@ -63,15 +63,16 @@
             </div>
         </div>
 
-
         <!-- Write your post  -->
         <div class="col-md-8 order-md-2">
             <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <div class="message-box">
                     <small> <% include ../middleware/messages.ejs %></small>
                 </div>
-                <h4 class="mb-3">post your status</h4>
 
+                <% include ../middleware/search-box %>
+                
+                <h4 class="mb-3">post your status</h4>
                 <hr class="mb-4">
                 <ul class="list-group mb-2">
                     <li class="justify-content-between list-group-item d-flex  bg-light">
@@ -97,7 +98,7 @@
                                 style="padding: 1px 20px;">post</button>
 
                                 <% if(user.post) { %>
-                                <a href="/users/profile/all_posts/delete/<%= user.id %>"><small title="delete all post" style="padding-left: 5px;"><i class="fa fa-bomb" style="font-size:24px"></i></small></a>
+                                <a href="/users/profile/all_posts/delete/<%= user.id %>" class="pull-right"><small title="delete all post" style="padding-left: 5px;"><i class="fa fa-bomb" style="font-size:24px"></i></small></a>
                                 <% } %>
                         </form>
                     </li>
