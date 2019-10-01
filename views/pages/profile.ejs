@@ -6,7 +6,7 @@
 <div class="container mt-3">
 
     <% if (user) { %>
-        
+
     <div class="row">
         <div class="col-md-4 order-md-1 mt-8">
             <div class="my-3 p-3 bg-white rounded shadow-sm">
@@ -71,19 +71,19 @@
                 </div>
 
                 <% include ../middleware/search-box %>
-                
+
                 <h4 class="mb-3">post your status</h4>
                 <hr class="mb-4">
                 <ul class="list-group mb-2">
                     <li class="justify-content-between list-group-item d-flex  bg-light">
-                        <div>
-                            <a href="#post" class="font_awsome" data-toggle="tooltip" data-placement="top"
-                                title="post status"><i class="fa fa-pencil-square-o"></i></a>
+                        <div class="profile_elements">
 
-                            <a href="#" class="font_awsome" data-toggle="tooltip" data-placement="top"
-                                title="see gallery"><i class="fa fa-camera"></i></a>
-                            <a href="/users/profile_details" class="font_awsome" data-toggle="tooltip"
-                                data-placement="top" title="see profile"><i class="fa fa-vcard"></i></a>
+                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="write post" onclick="selectTextarea()"><i class="fa fa-pencil-square-o"></i></span>
+                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="see profile"><i class="fa fa-vcard"></i></span>
+
+                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="upload image" style="padding-right: 2px;"><i class="fa fa-camera"></i></span><small class=" image_upload_text"></small>
+                            <input type="file" name="" id="select_image">
+
                         </div>
                         <span class="text-muted blockquote-footer">free to post</span>
                     </li>
@@ -91,56 +91,61 @@
                     <li class="list-group-item">
                         <form action="/users/profile/post/<%= user.id %>" method="POST">
                             <div class="form-group">
-                                <textarea class="form-control" id="post" rows="5" placeholder="write what you think"
+                                <textarea class="form-control" id="writePost" rows="5" placeholder="write what you think"
                                     name="post"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm"
                                 style="padding: 1px 20px;">post</button>
 
-                                <% if(user.post) { %>
-                                <a href="/users/profile/all_posts/delete/<%= user.id %>" class="pull-right"><small title="delete all post" style="padding-left: 5px;"><i class="fa fa-bomb" style="font-size:24px"></i></small></a>
-                                <% } %>
+                            <% if(user.post) { %>
+                            <a href="/users/profile/all_posts/delete/<%= user.id %>" class="pull-right"><small
+                                    title="delete all post" style="padding-left: 5px;"><i class="fa fa-bomb"
+                                        style="font-size:24px"></i></small></a>
+                            <% } %>
                         </form>
                     </li>
                 </ul>
             </div>
 
-            
-                <!-- show All Post -->
+
+            <!-- show All Post -->
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <p class="border-bottom border-gray pb-2 mb-2">All your posts</p>
-                
+
                 <% if(user.post) { %>
-                <% post.forEach((user, index) => { %> 
-                
-                    <div class="card  mb-2">
-                        <div class="card-body">
-                            <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img" alt="<%= user.username %>" width="30px" height="30px"><span class="border-bottom border-black pb-1 mb-0 pl-1"> <%= user.name %></span>
-                            <small class="pull-right"><i class="fa fa-edit"></i></small>
-                            <small class="pull-right"><a href="/users/profile/post/delete/<%= user.id %>"><i class="fa fa-remove"></i></a></small>
-                            <br>
-                            <p class="card-text pl-4"> <%= user.post %></p>
-                            <small class="pl-4">Date: <%= user.date.toLocaleDateString() %></small>
-                            <small><%= ` ${user.date.getHours()}:${user.date.getMinutes()}:${user.date.getSeconds()}` %></small>
-                        </div>
+                <% post.forEach((user, index) => { %>
+
+                <div class="card  mb-2">
+                    <div class="card-body">
+                        <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img"
+                            alt="<%= user.username %>" width="30px" height="30px"><span
+                            class="border-bottom border-black pb-1 mb-0 pl-1"> <%= user.name %></span>
+                        <small class="pull-right"><i class="fa fa-edit"></i></small>
+                        <small class="pull-right"><a href="/users/profile/post/delete/<%= user.id %>"><i
+                                    class="fa fa-remove"></i></a></small>
+                        <br>
+                        <p class="card-text pl-4"> <%= user.post %></p>
+                        <small class="pl-4">Date: <%= user.date.toLocaleDateString() %></small>
+                        <small><%= ` ${user.date.getHours()}:${user.date.getMinutes()}:${user.date.getSeconds()}` %></small>
                     </div>
+                </div>
 
                 <% }); %>
                 <% } else { %>
 
-                    <div class="card">
-                        <div class="card-body">
-                            <p class="card-text">write your first post</p>
-                        </div>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">write your first post</p>
                     </div>
+                </div>
                 <% } %>
             </div>
-         
+
         </div>
     </div>
 
 
-   
+
     <% } else { %>
     <div class="my-5 p-3 bg-white rounded shadow-sm">
         <p class="text-center">No users Found</p>
@@ -187,6 +192,24 @@
 <script>
     let a = document.getElementById('user_name').textContent;
     a = a.toUpperCase();
+
+
+    $(".fa-camera").click(function () {
+        $("#select_image").trigger('click');
+    });
+
+    $("#select_image").on('change', function () {
+        var val = $(this).val();
+        $(this).siblings('.image_upload_text').text(val).css("fontSize", "10px");
+    });
 </script>
+
+<script>
+    function selectTextarea() {
+        document.getElementById("writePost").select()    
+    }
+</script>
+
+
 
 <% include ../include/footer.ejs %>

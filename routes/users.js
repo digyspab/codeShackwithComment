@@ -361,6 +361,35 @@ router.post('/update_profile', (req, res, next) => {
 });
 
 
+// GET method for all posts
+router.get('/users_all_posts', (req, res, next) => {
+    let user = req.session.user,
+        userId = req.session.userId;
+
+
+    let userName;
+
+    let usersPost = "SELECT DISTINCT users.username, users.avtar, posts_content.user_ID FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID ";
+    let get_all_post = "SELECT users.username, users.avtar, posts_content.* FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID ORDER BY date DESC";
+
+    db.query(usersPost, (err, results, fields) => { // filter name
+        userName = results;
+    });
+
+    db.query(get_all_post, (err, results, fields) => { // filter name
+
+        if (err) {
+            return res.status(500).send(err)
+        } else {
+            res.render('pages/users_posts', {
+                title: 'All posts',
+                user: results,
+                userName
+            });
+        }
+    });
+});
+
 // GET logout method
 router.get('/logout', (req, res, next) => {
     req.session.destroy((err) => {

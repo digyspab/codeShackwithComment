@@ -105,6 +105,21 @@ thead {
 
 
     /* Profile */
+.profile_elements {
+    display: inline-flex;
+    align-items: center;
+}
+
+
+
+.font_awsome:hover {
+    opacity: 0.6;
+}
+
+#select_image {
+    display: none;
+}
+
 #user_name {
     text-transform: capitalize;
 }
@@ -115,6 +130,7 @@ thead {
 }
 
 .font_awsome {
+    cursor: pointer;
     font-size: 20px;
     padding: 0 35px 0 0;
 }
@@ -161,10 +177,7 @@ thead {
 
 
 /* table */
-.numbering {
-    counter-increment: rowNumber;
-    content: counter(rowNumber);
-}
+
 
 @media (min-width: 768px) { 
 	#result {
