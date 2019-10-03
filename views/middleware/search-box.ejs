@@ -1,38 +1,64 @@
 
 
 
-<div class="form-group">
-    <div class="row">
-        <div class="col-9">
-            <input type="text" class="form-control" name="search" id="nameBox" placeholder="search all users...">
+<form action="/search/all_users" method="GET">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-9">
+                <input type="text" class="form-control" name="searchTerm" id="searchTerm" placeholder="search all users...">
+            </div>
+            <!-- <div class="col-4"> -->
+                <button id="readButton">search</button>
+            <!-- </div> -->
         </div>
-        <!-- <div class="col-4"> -->
-            <button id="readButton">search</button>
-        <!-- </div> -->
     </div>
-</div>
-<ul class="list-group list-group-flush" id="status"></ul>
+</form>
+<ul class="list-group list-group-flush" id="results"></ul>
 
-<!-- <div id="jobDiv"></div> -->
 
-<!-- <script>
 
-    $(document).ready(() => {
+<script>
+   
+   let searchTerm = document.getElementById('searchTerm');
+    let results = document.getElementById('results');
+    
+    searchTerm.addEventListener('keyup', searchFunction);
 
-            $.ajax({
-                // all URLs are relative to http://localhost:3000/
-                url: http://localhost:5000/users/profile,
-                type: 'GET',
-                dataType: 'json', // this URL returns data in JSON format
-                success: (data) => {
-                    console.log('You received some data!', data);
 
-                    $("#status").append(data)
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert('error ' + textStatus + " " + errorThrown);
-                }
-            });
-    });
 
-</script> -->
+    function searchFunction() {
+        let products;
+
+        fetch('http://localhost:5000/search/all_users')
+        // .then((response) => response.json())
+        .then((response) => {
+
+            if (response.ok) {
+                response.json().then((json) => {
+                    products = json;
+                    initialize();
+                });
+            } else {
+                console.log('Network request for products.json failed with response ' + response.status + ': ' + response.statusText);
+            }
+        });
+
+        function initialize() {
+
+            let results = document.getElementById('results');
+
+            products.forEach((user) => {
+                results.innerHTML += (`
+                <li class="list-group-item">
+                    <img src="../../assets/img/profile/${user.avtar}" height="40" width="40" class="img-thumbnail" /> 
+                    <a href="https://www.google.com"> ${user.username} | 
+                        <span class="text-muted"> ${user.email}</span>
+                    </a>
+                </li>
+                `)
+            });   
+        }
+    }
+
+</script>
+

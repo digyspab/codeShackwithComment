@@ -3,25 +3,25 @@
 
 
 
-<div class="container-flex mt-3">
+<div class="container mt-3">
 
 
     <div class="row">
         <% if(user || userName) { %>
-        <div class="col-4 mt-8">
+        <div class="col-sm-4 mt-8">
             <div class="my-3 p-3 bg-white rounded shadow-sm">
                 <p class="border-bottom border-gray pb-2 mb-2">All users</p>
 
-                <% userName.forEach((user, index) => { %> 
+                <% userName.forEach((user, index) => { %>
                 <ul class="list-group mb-1 border-bottom border-black">
                     <div class="row">
                         <div class="col-2">
-                                <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img" alt=" <%= user.username %>"
-                        width="30px" height="30px">
-                    </div>
-                    <div class="col-6">
-                           <a href="<%= user.id %>"> <span><%= user.username %></span></a>
-                    </div>
+                            <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img"
+                                alt=" <%= user.username %>" width="30px" height="30px">
+                        </div>
+                        <div class="col-6">
+                            <a href="<%= user.id %>"> <span><%= user.username %></span></a>
+                        </div>
                     </div>
                 </ul>
                 <% });  %>
@@ -30,30 +30,46 @@
         </div>
 
         <!-- search bar  -->
-        <div class="col-8">
+        <div class="col-sm-8">
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <% include ../middleware/search-box %>
+                <form action="/search/all_users" method="GET" autocomplete="off">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                                <input type="text" class="form-control" name="searchTerm" id="searchTerm"
+                                    placeholder="search all users posts...">
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
             </div>
 
 
             <!-- show All Post -->
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <p class="border-bottom border-gray pb-2 mb-2">All your posts</p>
-                
+
                 <% if(user) { %>
-                <% user.forEach((user, index) => { %> 
-                <div class="card  mb-2">
-                    <div class="card-body">
-                        <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img"
-                            alt="<%= user.username %>" width="30px" height="30px"><span
-                            class="border-bottom border-black pb-1 mb-0 pl-1"><%= user.username %></span>
-                       
-                        <br>
-                        <p class="card-text pl-4" id="<%= user.id %>"><%= user.post %></p>
-                        <small class="pl-4">Date: <%= user.date.toLocaleDateString() %></small>
-                        <small><%= ` ${user.date.getHours()}:${user.date.getMinutes()}:${user.date.getSeconds()}` %></small>
-                    </div>
-                </div>
+                <% user.forEach((user, index) => { %>
+                <ul class="list-group" id="names">
+                    <li class="list-group-item mb-2">
+                        <span>
+                            <div class="card-body" id="users">
+                                <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img"
+                                    alt="<%= user.username %>" width="30px" height="30px"><span
+                                    class="border-bottom border-black pb-1 mb-0 pl-1"><%= user.username %></span>
+
+                                <br>
+                                <p class="card-text pl-4" id="<%= user.id %>"><%= user.post %></p>
+                                <small class="pl-4">Date: <%= user.date.toLocaleDateString() %></small>
+                                <small><%= ` ${user.date.getHours()}:${user.date.getMinutes()}:${user.date.getSeconds()}` %></small>
+                            </div>
+                        </span>
+
+                    </li>
+                </ul>
+
                 <% }); %>
                 <% } else { %>
 
@@ -83,9 +99,35 @@
 
 
 
+
 <script>
-    let a = document.getElementById('user_name').textContent;
-    a = a.toUpperCase();
+
+    let searchTerm = document.getElementById('searchTerm');
+    searchTerm.addEventListener('keyup', searchFunction);
+
+
+
+    function searchFunction() {
+        
+        let searchTermValue = document.getElementById('searchTerm').value.toLowerCase();
+        let ul = document.getElementById('names');
+        let li = document.querySelectorAll('li.list-group-item');
+
+        for (let i = 0; i < li.length; i++) {
+            let span = li[i].getElementsByTagName('span')[0];
+
+            if (span.innerHTML.indexOf(searchTermValue) > -1) {
+                li[i].style.display = '';
+            } else {
+                li[i].style.display = 'none';
+            }
+        }
+
+    }
+
+
+
+
 </script>
 
 <% include ../include/footer.ejs %>
