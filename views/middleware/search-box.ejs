@@ -1,14 +1,11 @@
-
-
-
-<form action="/search/all_users" method="GET">
+<form>
     <div class="form-group">
         <div class="row">
-            <div class="col-9">
-                <input type="text" class="form-control" name="searchTerm" id="searchTerm" placeholder="search all users...">
+            <div class="col-12">
+                <input type="search" class="form-control" name="searchTerm" id="searchTerm" autocomplete="off" placeholder="search all users...">
             </div>
-            <!-- <div class="col-4"> -->
-                <button id="readButton">search</button>
+            <!-- <div class="col-1"> -->
+            <!-- <button id="readButton">search</button> -->
             <!-- </div> -->
         </div>
     </div>
@@ -18,47 +15,59 @@
 
 
 <script>
-   
-   let searchTerm = document.getElementById('searchTerm');
+
     let results = document.getElementById('results');
-    
+
     searchTerm.addEventListener('keyup', searchFunction);
 
 
 
-    function searchFunction() {
-        let products;
+    function searchFunction(event) {
+        
 
-        fetch('http://localhost:5000/search/all_users')
-        // .then((response) => response.json())
-        .then((response) => {
+        // let products;
+        let searchTerm = document.getElementById('searchTerm').value;
 
-            if (response.ok) {
-                response.json().then((json) => {
-                    products = json;
-                    initialize();
-                });
-            } else {
-                console.log('Network request for products.json failed with response ' + response.status + ': ' + response.statusText);
-            }
-        });
+        const searchUser = {
+            searchTerm: searchTerm
+        };
 
-        function initialize() {
+        fetch('http://localhost:5000/search/all_users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(searchUser)
+        })
+            // .then((response) => response.json())
+            .then((response) => response.json())
+            .then((data) => {
+                results.innerHTML = ''
 
-            let results = document.getElementById('results');
 
-            products.forEach((user) => {
-                results.innerHTML += (`
-                <li class="list-group-item">
-                    <img src="../../assets/img/profile/${user.avtar}" height="40" width="40" class="img-thumbnail" /> 
-                    <a href="https://www.google.com"> ${user.username} | 
-                        <span class="text-muted"> ${user.email}</span>
-                    </a>
-                </li>
-                `)
-            });   
-        }
+                data.forEach((user) => {
+                    if (searchTerm === '') {
+                        results.innerHTML = ''
+                    } else {
+
+                        results.innerHTML +=(
+                            `
+                        <li class="list-group-item">
+                            <img src="../../assets/img/profile/${user.avtar}" height="40" width="40" class="img-thumbnail" /> 
+                            <a href="/search/all_users_profile/${user.id}"> ${user.username} | 
+                                <span class="text-muted"> ${user.email} | ${user.id} </span>
+                            </a>
+                        </li>
+                        `
+                        )
+                    }
+                })
+
+
+
+            });
+
+            event.preventDefault();
     }
 
 </script>
-

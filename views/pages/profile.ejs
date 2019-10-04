@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-md-4 order-md-1 mt-8">
-            <div class="my-3 p-3 bg-white rounded shadow-sm">
+            <div class="my-3 p-3 bg-white rounded shadow-sm border border-dark">
                 <ul class="list-group mb-1">
                     <!-- user details -->
                     <footer class="blockquote-footer">
@@ -65,12 +65,13 @@
 
         <!-- Write your post  -->
         <div class="col-md-8 order-md-2">
-            <div class="my-3 p-3 bg-white rounded shadow-sm">
-                <div class="message-box">
-                    <small> <% include ../middleware/messages.ejs %></small>
+                <div class="my-3 p-3 bg-white rounded shadow-sm border border-primary">
+                    <div class="message-box">
+                        <% include ../middleware/search-box %>
+                    </div>
                 </div>
-
-                <% include ../middleware/search-box %>
+                <div class="my-3 p-3 bg-white rounded shadow-sm">
+                        <small> <% include ../middleware/messages.ejs %></small>
 
                 <h4 class="mb-3">post your status</h4>
                 <hr class="mb-4">
@@ -79,9 +80,9 @@
                         <div class="profile_elements">
 
                             <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="write post" onclick="selectTextarea()"><i class="fa fa-pencil-square-o"></i></span>
-                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="see profile"><i class="fa fa-vcard"></i></span>
+                            <!-- <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="see profile"><i class="fa fa-vcard"></i></span> -->
 
-                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="upload image" style="padding-right: 2px;"><i class="fa fa-camera"></i></span><small class=" image_upload_text"></small>
+                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="upload image"><i class="fa fa-camera"></i></span><small class=" image_upload_text"></small>
                             <input type="file" name="" id="select_image">
 
                         </div>

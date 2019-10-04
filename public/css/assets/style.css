@@ -56,7 +56,7 @@ thead {
 /* Search box */
 #results {
 	position: absolute;
-	width: 68%;
+	width: 75%;
 	/* max-width: 80%; */
 	cursor: pointer;
 	overflow-y: auto;
@@ -77,6 +77,14 @@ thead {
     align-items: center;
 }
 
+
+
+/* users_posts */
+.side-all-users-post-image {
+    overflow-y: auto;
+	max-height: 500px;
+	box-sizing: border-box;
+}
 
 
 .font_awsome:hover {

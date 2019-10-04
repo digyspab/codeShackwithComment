@@ -3,24 +3,24 @@
 
 
 
-<div class="container mt-3">
+<div class="container mt-5">
 
 
     <div class="row">
         <% if(user || userName) { %>
-        <div class="col-sm-4 mt-8">
-            <div class="my-3 p-3 bg-white rounded shadow-sm">
+        <div class="col-sm-4 mt-1 side-all-users-post-image">
+            <div class="my-3 p-3 bg-white rounded shadow-sm border border-dark">
                 <p class="border-bottom border-gray pb-2 mb-2">All users</p>
 
                 <% userName.forEach((user, index) => { %>
                 <ul class="list-group mb-1 border-bottom border-black">
                     <div class="row">
                         <div class="col-2">
-                            <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img"
-                                alt=" <%= user.username %>" width="30px" height="30px">
+                            <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img pb-1"
+                                alt=" <%= user.username %>" width="35px" height="40px">
                         </div>
                         <div class="col-6">
-                            <a href="<%= user.id %>"> <span><%= user.username %></span></a>
+                            <a href="<%= user.id %>"> <span class="pl-2"><%= user.username %></span></a>
                         </div>
                     </div>
                 </ul>
@@ -30,14 +30,14 @@
         </div>
 
         <!-- search bar  -->
-        <div class="col-sm-8">
-            <div class="my-3 p-3 bg-white rounded box-shadow">
+        <div class="col-sm-8 mt-1">
+            <div class="my-3 p-3 bg-white rounded box-shadow border border-primary">
                 <form action="/search/all_users" method="GET" autocomplete="off">
                     <div class="form-group">
                         <div class="row">
                             <div class="col-12">
                                 <input type="text" class="form-control" name="searchTerm" id="searchTerm"
-                                    placeholder="search all users posts...">
+                                    placeholder="filter all users post and name wise...">
                             </div>
 
                         </div>
@@ -48,7 +48,7 @@
 
             <!-- show All Post -->
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <p class="border-bottom border-gray pb-2 mb-2">All your posts</p>
+                <p class="border-bottom border-gray pb-2 mb-2">All users posts</p>
 
                 <% if(user) { %>
                 <% user.forEach((user, index) => { %>

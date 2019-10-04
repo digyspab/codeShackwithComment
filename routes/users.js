@@ -366,7 +366,6 @@ router.get('/users_all_posts', (req, res, next) => {
     let user = req.session.user,
         userId = req.session.userId;
 
-
     let userName;
 
     let usersPost = "SELECT DISTINCT users.username, users.avtar, posts_content.user_ID FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID ";
@@ -376,7 +375,7 @@ router.get('/users_all_posts', (req, res, next) => {
         userName = results;
     });
 
-    db.query(get_all_post, (err, results, fields) => { // filter name
+    db.query(get_all_post, (err, results, fields) => { // filter name with posts
 
         if (err) {
             return res.status(500).send(err)
