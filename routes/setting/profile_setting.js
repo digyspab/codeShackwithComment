@@ -6,7 +6,7 @@ const router = express.Router();
 
 const authentication = require('../../config/auth');
 
-// GET profile setting "password, delte account"
+// GET profile setting "password, delete account"
 router.get('/profile_settings', (req, res, next) => {
 
     let user = req.session.user;
@@ -136,9 +136,7 @@ router.post('/avtar/:id', (req, res, next) => {
             req.flash('error_msg', `Invalid file format. only '.gif', '.png', '.jpeg'`)
             res.redirect('/users/profile');
         }
-
-
-    })
+    });
 });
 
 
@@ -191,11 +189,7 @@ router.post('/delete/:id', (req, res, next) => {
             req.flash('error_msg', 'password not matched');
             res.redirect('/profile/profile_settings');
         }
-    });
-
-    
-
-   
+    });   
 });
 
 

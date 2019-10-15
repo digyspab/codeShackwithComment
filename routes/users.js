@@ -1,6 +1,8 @@
 const fs = require('fs');
 const express = require('express');
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
+
 
 const router = express.Router()
 
@@ -94,52 +96,55 @@ router.post('/register', (req, res, next) => {
             errors
         });
     } else {
+
         const usernameQuery = "SELECT * FROM users WHERE username = '" + username + "'";
+        bcrypt.hash(password, 10, (err, hash) => {
 
-        db.query(usernameQuery, (err, results, fields) => {
-            if (err) {
-                return res.status(500).send(err);
-            }
+            db.query(usernameQuery, (err, results, fields) => {
+                if (err) {
+                    return res.status(500).send(err);
+                }
 
-            if (results.length > 0) {
-                errors({ msg: 'Username already exists' });
-                res.render('layouts/registration', {
-                    title: '',
-                    errors
-                });
-            } else {
-                // check the filetype before uploading it
-                if (uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' || uploadedFile.mimetype === 'image/gif') {
-                    // upload the image in public folder
-                    uploadedFile.mv(`public/assets/img/profile/${image_name}`, (err) => {
-                        hobbiesEmpty = '';
-                        if (err) {
-                            return res.status(500).redirect('/users/register')
-                        }
-
-                        if (hobbies.length > 0) {
-                            hobbies = hobbiesEmpty.concat(hobbies)
-                        }
-
-                        // save users details in database
-                        const insertUser = "INSERT INTO `users`(name, username, email, password, maritalstatus, hobbies, gender, dob, contactnumber, house, street, city, country, zip, textareawrite, avtar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-                        db.query(insertUser, [name, username, email, password, maritalstatus, hobbies, gender, dob, contactnumber, house, street, city, country, zip, textareawrite, image_name], (err, results, fields) => {
-                            if (err) {
-                                return res.status(500).send(err);
-                            }
-
-                            req.flash('success_msg', 'You can login')
-                            res.redirect('/users/login');
-                        });
-                    });
-                } else {
-                    errors.push({ msg: `Invalid file format. only '.gif', '.png', '.jpeg'` })
+                if (results.length > 0) {
+                    errors({ msg: 'Username already exists' });
                     res.render('layouts/registration', {
                         title: '',
-                        user: req.users
+                        errors
                     });
+                } else {
+                    // check the filetype before uploading it
+                    if (uploadedFile.mimetype === 'image/png' || uploadedFile.mimetype === 'image/jpeg' || uploadedFile.mimetype === 'image/gif') {
+                        // upload the image in public folder
+                        uploadedFile.mv(`public/assets/img/profile/${image_name}`, (err) => {
+                            hobbiesEmpty = '';
+                            if (err) {
+                                return res.status(500).redirect('/users/register')
+                            }
+
+                            if (hobbies.length > 0) {
+                                hobbies = hobbiesEmpty.concat(hobbies)
+                            }
+
+                            // save users details in database
+                            const insertUser = "INSERT INTO `users`(name, username, email, password, maritalstatus, hobbies, gender, dob, contactnumber, house, street, city, country, zip, textareawrite, avtar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                            db.query(insertUser, [name, username, email, hash, maritalstatus, hobbies, gender, dob, contactnumber, house, street, city, country, zip, textareawrite, image_name], (err, results, fields) => {
+                                if (err) {
+                                    return res.status(500).send(err);
+                                }
+
+                                req.flash('success_msg', 'You can login')
+                                res.redirect('/users/login');
+                            });
+                        });
+                    } else {
+                        errors.push({ msg: `Invalid file format. only '.gif', '.png', '.jpeg'` })
+                        res.render('layouts/registration', {
+                            title: '',
+                            user: req.users
+                        });
+                    }
                 }
-            }
+            });
         });
     }
 
@@ -153,7 +158,42 @@ router.get('/login', (req, res, next) => {
     });
 });
 
-// login POST method
+// GET profile and show all post
+router.get('/profile', (req, res) => {
+    let user = req.session.user,
+        userId = req.session.userId;
+
+    if (userId == null) {
+        res.redirect('/users/login');
+    }
+
+    // let query = "SELECT users.*, posts_content.* FROM `users`, `posts_content` WHERE users.id = '" +  userId + "' AND posts_content.user_ID = '" + userId + "' ORDER BY date DESC ";
+    let query_with_post = "SELECT users.*, posts_content.* FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID where users.id = '" + userId + "' ORDER BY date DESC";
+    let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "'";
+
+    db.query(query, (err, results, fields) => {
+
+        var Checkpost = '';
+        db.query(query_with_post, (err, resultsPost, fields) => {
+            if (Object.keys(resultsPost).length === 0) {
+                res.render('pages/profile', {
+                    title: 'Profile Page',
+                    user: results[0],
+                    Checkpost: "nopost",
+                });
+            } else {
+                res.render('pages/profile', {
+                    title: 'Profile Page',
+                    user: resultsPost[0],
+                    post: resultsPost,
+                    Checkpost: "",
+                });
+            }
+        });
+    });
+});
+
+// profile POST method
 router.post('/login', (req, res, next) => {
     const username = req.body.username;
     const password = req.body.password;
@@ -171,7 +211,7 @@ router.post('/login', (req, res, next) => {
                 req.session.userId = results[0].id;
                 req.session.user = results[0];
 
-                /* res.render('pages/profile.ejs', {
+               /*  res.render('pages/profile.ejs', {
                     title: 'User Profile', 
                     user: results[0]
                 }); */
@@ -191,46 +231,13 @@ router.post('/login', (req, res, next) => {
     }
 });
 
-// GET profile and show all post
-router.get('/profile', (req, res) => {
-    let user = req.session.user,
-        userId = req.session.userId;
 
-    if (userId == null) {
-        res.redirect('/users/login');
-    }
-
-    // let query = "SELECT users.*, posts_content.* FROM `users`, `posts_content` WHERE users.id = '" +  userId + "' AND posts_content.user_ID = '" + userId + "' ORDER BY date DESC ";
-    let query_with_post = "SELECT users.*, posts_content.* FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID where users.id = '" + userId + "' ORDER BY date DESC";
-    let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "'";
-
-    db.query(query, (err, results, fields) => {
-
-        var Checkpost='';
-        db.query(query_with_post, (err, resultsPost, fields) => {
-            if (Object.keys(resultsPost).length === 0) {
-                res.render('pages/profile', {
-                    title: 'Profile Page',
-                    user: results[0],
-                    Checkpost:"nopost",
-                });
-            } else {
-                res.render('pages/profile', {
-                    title: 'Profile Page',
-                    user: resultsPost[0],
-                    post: resultsPost,
-                    Checkpost:"",
-                });
-            }
-        });
-    });
-});
 
 
 // POST status
 router.post('/profile/post/:id', (req, res, next) => {
     let user = req.session.user,
-    userId = req.session.userId
+        userId = req.session.userId
 
     let post = req.body.post;
 
@@ -250,12 +257,12 @@ router.get('/profile/all_posts/delete/:id', (req, res, next) => {
         userId = req.session.userId;
 
     let deletePost = "DELETE FROM `posts_content` WHERE user_ID = '" + userId + "'";
-    if(!userId) {
+    if (!userId) {
         return res.redirect('/users/login');
     }
 
     db.query(deletePost, (err, results, fields) => {
-        if(err) {
+        if (err) {
             res.status(500).send(err);
         } else {
             res.redirect('/users/profile');
@@ -266,26 +273,26 @@ router.get('/profile/all_posts/delete/:id', (req, res, next) => {
 // GET delete one by one posts of users
 router.get('/profile/post/delete/:id', (req, res, next) => {
     let user = req.session.user,
-    userId = req.session.userId;
+        userId = req.session.userId;
 
     let id = req.params.id;
 
-    if(!userId) {
+    if (!userId) {
         return res.redirect('/users/login');
     }
 
-        let deletePost = "DELETE FROM posts_content WHERE user_ID = '" + userId + "' AND id = '" + id  + "' ";
+    let deletePost = "DELETE FROM posts_content WHERE user_ID = '" + userId + "' AND id = '" + id + "' ";
 
-        db.query(deletePost, (err, onepost) => {
+    db.query(deletePost, (err, onepost) => {
 
-            if(err) {
-                console.log('one post not delete');
-                res.status(404).send(err);
-            } else {
-                console.log('one post delete');
-                res.redirect('/users/profile');
-            }
-        });
+        if (err) {
+            console.log('one post not delete');
+            res.status(404).send(err);
+        } else {
+            console.log('one post delete');
+            res.redirect('/users/profile');
+        }
+    });
 });
 
 // GET profile-details
@@ -399,4 +406,8 @@ router.get('/logout', (req, res, next) => {
     });
 });
 
+
+
 module.exports = router;
+
+

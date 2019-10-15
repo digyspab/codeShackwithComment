@@ -79,12 +79,13 @@ thead {
 
 
 
-/* users_posts */
+/* all users_posts */
 .side-all-users-post-image {
     overflow-y: auto;
 	max-height: 500px;
 	box-sizing: border-box;
 }
+
 
 
 .font_awsome:hover {

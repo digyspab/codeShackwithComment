@@ -5,7 +5,16 @@ const router = express.Router();
 const authentication = require('../config/auth');
 
 
-router.get('/', authentication.is_login, (req, res) => {
+router.get('/index', authentication.is_login, (req, res, next) => {
+    res.statusCode = 404;
+    res.setHeader('Content-Type', 'text/html');
+    res.write('<p>hello</p>')
+    res.end();
+    res.redirect('/users/profile');
+    
+});
+
+router.get('/',  (req, res) => {
 
 
     res.render('layouts/welcome', {
@@ -14,12 +23,12 @@ router.get('/', authentication.is_login, (req, res) => {
     });
 });
 
-/* router.all('*', (req, res, next) => {
+router.all('*', (req, res, next) => {
     res.render('middleware/error_page.ejs', {
         title: 'Page not found'
     });
 });
- */
+
 
 
 module.exports = router;

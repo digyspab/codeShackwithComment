@@ -5,13 +5,17 @@ const router = express.Router();
 
 
 router.post('/all_users', (req, res) => {
-    let userid = req.params.id;
-    console.log("userid",userid, req.body);
 
-    let searchuser = "SELECT id, email, username, avtar FROM users WHERE name OR username LIKE '%" + req.body.searchTerm + "%'  ";
+    let user = req.session.user;
+    let userId = req.session.userId;
+    let user_ID = req.params.id;
+
+    if(userId === null) {
+        res.redirect('/users/login')
+    }
+
+    let searchuser = "SELECT id, email, username, avtar FROM users WHERE name OR username LIKE '%" + req.body.searchTerm + "%'  LIMIT 5";
     // let searchuser = "SELECT id, email, username, avtar  FROM users ";
-
-    console.log('search: ' , searchuser);
     
     db.query(searchuser, (err, results, fields) => {
 
@@ -25,9 +29,15 @@ router.post('/all_users', (req, res) => {
 
 router.get('/all_users_profile/:id', (req, res) => {
     
+    let user = req.session.user;
+    let userId = req.session.userId;
     let user_ID = req.params.id;
 
-    let query = "SELECT posts_content.* FROM `users` INNER JOIN `posts_content` ON users.id = posts_content.user_ID WHERE users.id = '" + user_ID + "' "
+    if(userId === null) {
+        res.redirect('/users/login')
+    }
+    
+    let query = "SELECT posts_content.* FROM `users` INNER JOIN `posts_content` ON users.id = posts_content.user_ID WHERE users.id = '" + user_ID + "' ";
     let username = "SELECT * FROM `users` WHERE users.id = '" + user_ID + "' ";
 
     db.query(username, (err, resultsName) => {
@@ -39,6 +49,9 @@ router.get('/all_users_profile/:id', (req, res) => {
                 userName: resultsName[0]
             });
         });
+
+        // let display_comments = "SELECT users.*, comments.* FROM users INNER JOIN comments on users.id = comments.comment_id WHERE comment_id = '" + user_ID + "' "
+       
     });
 });
 

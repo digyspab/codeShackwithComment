@@ -9,6 +9,7 @@
   "author": "Hyphen",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "connect-flash": "^0.1.1",
     "ejs": "^2.7.1",

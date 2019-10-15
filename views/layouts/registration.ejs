@@ -1,6 +1,6 @@
 <% include ../index.ejs %>
 
-
+<% if (!user) { %>
 <main role="main" class="container-fluid h-100 bg-light text-dark card p-2">
     <div class="row justify-content-center align-items-center">
         <div class="my-0 p-3 bg-black rounded shadow-sm">
@@ -177,7 +177,7 @@
 
 </main>
 
-
+<% } %>
 
 
 <% include ../include/footer %>

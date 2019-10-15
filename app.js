@@ -5,6 +5,7 @@ const ejs = require('ejs');
 const flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
 const logger = require('morgan');
+const bcrypt = require('bcrypt');
 
 
 const app = express();
@@ -54,6 +55,8 @@ app.use('/users', require('./routes/users'));
 app.use('/admin', require('./routes/admin'));
 app.use('/profile', require('./routes/setting/profile_setting'));
 app.use('/search', require('./routes/setting/search'));
+// app.use('/comment', require('./routes/setting/post_comment'));
+app.use('/email', require('./routes/email_verify/email_verification'));
 app.use('/', require('./routes/index'));
 
 

@@ -82,7 +82,7 @@
                             <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="write post" onclick="selectTextarea()"><i class="fa fa-pencil-square-o"></i></span>
                             <!-- <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="see profile"><i class="fa fa-vcard"></i></span> -->
 
-                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="upload image"><i class="fa fa-camera"></i></span><small class=" image_upload_text"></small>
+                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="upload image"><i class="fa fa-camera"></i></span><small class="image_upload_text"></small>
                             <input type="file" name="" id="select_image">
 
                         </div>
@@ -92,8 +92,7 @@
                     <li class="list-group-item">
                         <form action="/users/profile/post/<%= user.id %>" method="POST">
                             <div class="form-group">
-                                <textarea class="form-control" id="writePost" rows="5" placeholder="write what you think"
-                                    name="post"></textarea>
+                                <textarea class="form-control" id="writePost" rows="5" placeholder="write what you think" name="post"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm"
                                 style="padding: 1px 20px;">post</button>

@@ -76,12 +76,15 @@
                         <p class="card-text pl-4"> <%= userpost.post %></p>
                         <small class="pl-4">Date: <%= userpost.date.toLocaleDateString() %></small>
                         <small><%= ` ${userpost.date.getHours()}:${userpost.date.getMinutes()}:${userpost.date.getSeconds()}` %></small>
+
+                        
+                        <% include ../middleware/posts_comment.ejs %>
+                        
+                        
                     </div>
                 </div>
 
                 <% }); %>
-
-
             </div>
         </div>
     </div>
@@ -95,6 +98,25 @@
     <% } %>
 </div>
 
+<script>
+    function showTextForComment(e) {
+        let comment_click = document.getElementById('comment_click').style.display;
+        let my_display = document.getElementById('show_comment_post_form').style.display;
+        let hide_post_comment = document.getElementById('hide_post_comment').style.display;
+        
 
+        if(my_display == 'none') {
+            document.getElementById('show_comment_post_form').style.display = 'block';
+            document.getElementById('comment_click').style.display = 'none';
+        }
+        
+        if(hide_post_comment == 'block') {
+            document.getElementById('comment_click').style.display = 'block'
+            document.getElementById('hide_post_comment').style.display = 'none'
+        }
+
+        e.preventDefault();
+    }
+</script>
 
 <% include ../include/footer.ejs %>

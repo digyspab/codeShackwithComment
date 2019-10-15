@@ -27,7 +27,7 @@ let smtpTransport = nodemailer.createTransport({
     }
 });
 
-const mailOptions, host, link;
+let mailOptions, host, link;
 /* -------------------------- SMTP OVER ------------------------------------ */
 
 // this is route is for signup
@@ -76,21 +76,6 @@ router.get('/verify', (req, res, next) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // create expiration date
 /* let expires = new Date();
 expires.setHours(expires.getHours() + 6);
@@ -99,3 +84,9 @@ expires.setHours(expires.getHours() + 6);
      token: token,
      expires: expires
  }; */
+
+
+
+ module.exports = router;
+ 
+ 
