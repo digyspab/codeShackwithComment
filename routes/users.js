@@ -158,8 +158,9 @@ router.get('/login', (req, res, next) => {
     });
 });
 
+
 // GET profile and show all post
-router.get('/profile', (req, res) => {
+router.get('/profile', (req, res, next) => {
     let user = req.session.user,
         userId = req.session.userId;
 
@@ -167,9 +168,13 @@ router.get('/profile', (req, res) => {
         res.redirect('/users/login');
     }
 
-    // let query = "SELECT users.*, posts_content.* FROM `users`, `posts_content` WHERE users.id = '" +  userId + "' AND posts_content.user_ID = '" + userId + "' ORDER BY date DESC ";
-    let query_with_post = "SELECT users.*, posts_content.* FROM `users` INNER JOIN `posts_content` on users.id = posts_content.user_ID where users.id = '" + userId + "' ORDER BY date DESC";
-    let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "'";
+    let query_with_post = "SELECT * FROM users INNER JOIN posts_content ON users.id = posts_content.user_ID LEFT JOIN comments ON comments.post_id = posts_content.id WHERE users.id = '" + userId + "'  ORDER BY date DESC";
+    let query = "SELECT * FROM `users` WHERE `id` = '" + userId + "' ";
+
+   
+
+    let postid;
+    let usersCommentonPost;
 
     db.query(query, (err, results, fields) => {
 
@@ -179,19 +184,37 @@ router.get('/profile', (req, res) => {
                 res.render('pages/profile', {
                     title: 'Profile Page',
                     user: results[0],
+                    post: results,
                     Checkpost: "nopost",
                 });
             } else {
-                res.render('pages/profile', {
-                    title: 'Profile Page',
-                    user: resultsPost[0],
-                    post: resultsPost,
-                    Checkpost: "",
+
+
+                for(let i = 0; i < resultsPost.length - 1; i++) {
+                    postid = resultsPost[i].post_id;
+                    usersCommentonPost = "SELECT *, posts_content.id FROM users INNER JOIN comments ON users.id = comments.user_id WHERE comments.post_id = '" + postid + "'";
+
+                }
+
+                db.query(usersCommentonPost, (err, allCommentonPost) => {
+                    console.log(resultsPost[0].id)
+                    console.log("--------------------------------------------------------------------------")
+                    console.log(resultsPost)
+                    res.render('pages/profile', {
+                        title: 'Profile Page',
+                        user: resultsPost[0],
+                        post: resultsPost,
+                        allCommentonPost: allCommentonPost,
+                        Checkpost: "",
+                    });
                 });
             }
+
         });
     });
 });
+
+
 
 // profile POST method
 router.post('/login', (req, res, next) => {
@@ -211,10 +234,10 @@ router.post('/login', (req, res, next) => {
                 req.session.userId = results[0].id;
                 req.session.user = results[0];
 
-               /*  res.render('pages/profile.ejs', {
-                    title: 'User Profile', 
-                    user: results[0]
-                }); */
+                /*  res.render('pages/profile.ejs', {
+                     title: 'User Profile', 
+                     user: results[0]
+                 }); */
                 res.redirect('/users/profile')
 
 
@@ -237,7 +260,7 @@ router.post('/login', (req, res, next) => {
 // POST status
 router.post('/profile/post/:id', (req, res, next) => {
     let user = req.session.user,
-        userId = req.session.userId
+        userId = req.session.userId;
 
     let post = req.body.post;
 

@@ -27,6 +27,7 @@ router.post('/all_users', (req, res) => {
     });
 });
 
+// GET Method of specific user search
 router.get('/all_users_profile/:id', (req, res) => {
     
     let user = req.session.user;
@@ -42,7 +43,11 @@ router.get('/all_users_profile/:id', (req, res) => {
 
     db.query(username, (err, resultsName) => {
 
+
         db.query(query, (err, results) => {
+            console.log('from all_users_profile: ');
+            console.log(results);
+
             res.render('layouts/all_users_profile_post', {
                 title: 'All users Profile',
                 user: results,

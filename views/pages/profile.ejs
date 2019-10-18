@@ -65,13 +65,13 @@
 
         <!-- Write your post  -->
         <div class="col-md-8 order-md-2">
-                <div class="my-3 p-3 bg-white rounded shadow-sm border border-primary">
-                    <div class="message-box">
-                        <% include ../middleware/search-box %>
-                    </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm border border-primary">
+                <div class="message-box">
+                    <% include ../middleware/search-box %>
                 </div>
-                <div class="my-3 p-3 bg-white rounded shadow-sm">
-                        <small> <% include ../middleware/messages.ejs %></small>
+            </div>
+            <div class="my-3 p-3 bg-white rounded shadow-sm">
+                <small> <% include ../middleware/messages.ejs %></small>
 
                 <h4 class="mb-3">post your status</h4>
                 <hr class="mb-4">
@@ -79,10 +79,12 @@
                     <li class="justify-content-between list-group-item d-flex  bg-light">
                         <div class="profile_elements">
 
-                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="write post" onclick="selectTextarea()"><i class="fa fa-pencil-square-o"></i></span>
+                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="write post"
+                                onclick="selectTextarea()"><i class="fa fa-pencil-square-o"></i></span>
                             <!-- <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="see profile"><i class="fa fa-vcard"></i></span> -->
 
-                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="upload image"><i class="fa fa-camera"></i></span><small class="image_upload_text"></small>
+                            <span class="font_awsome" data-toggle="tooltip" data-placement="top" title="upload image"><i
+                                    class="fa fa-camera"></i></span><small class="image_upload_text"></small>
                             <input type="file" name="" id="select_image">
 
                         </div>
@@ -90,15 +92,16 @@
                     </li>
 
                     <li class="list-group-item">
-                        <form action="/users/profile/post/<%= user.id %>" method="POST">
+                        <form action="/users/profile/post/<%= user.user_ID %>" method="POST">
                             <div class="form-group">
-                                <textarea class="form-control" id="writePost" rows="5" placeholder="write what you think" name="post"></textarea>
+                                <textarea class="form-control" id="writePost" rows="5"
+                                    placeholder="write what you think" name="post"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary btn-sm"
                                 style="padding: 1px 20px;">post</button>
 
                             <% if(user.post) { %>
-                            <a href="/users/profile/all_posts/delete/<%= user.id %>" class="pull-right"><small
+                            <a href="/users/profile/all_posts/delete/<%= user.user_ID %>" class="pull-right"><small
                                     title="delete all post" style="padding-left: 5px;"><i class="fa fa-bomb"
                                         style="font-size:24px"></i></small></a>
                             <% } %>
@@ -112,25 +115,52 @@
             <div class="my-3 p-3 bg-white rounded box-shadow">
                 <p class="border-bottom border-gray pb-2 mb-2">All your posts</p>
 
-                <% if(user.post) { %>
-                <% post.forEach((user, index) => { %>
+                <% if(user.post) {
+                     var postVal='';
+                %>
+                <% post.forEach((user, index) => { 
+                    if(user.post!=postVal){
+                    postVal=user.post;
+                %>
 
                 <div class="card  mb-2">
                     <div class="card-body">
                         <img src="/assets/img/profile/<%= user.avtar %>" class="rounded-circle player-img"
                             alt="<%= user.username %>" width="30px" height="30px"><span
                             class="border-bottom border-black pb-1 mb-0 pl-1"> <%= user.name %></span>
+
                         <small class="pull-right"><i class="fa fa-edit"></i></small>
-                        <small class="pull-right"><a href="/users/profile/post/delete/<%= user.id %>"><i
+                        <small class="pull-right"><a href="/users/profile/post/delete"><i
                                     class="fa fa-remove"></i></a></small>
                         <br>
                         <p class="card-text pl-4"> <%= user.post %></p>
                         <small class="pl-4">Date: <%= user.date.toLocaleDateString() %></small>
                         <small><%= ` ${user.date.getHours()}:${user.date.getMinutes()}:${user.date.getSeconds()}` %></small>
                     </div>
+
+                    <% if(allCommentonPost && user.comment) { %>
+                    <% allCommentonPost.forEach((value) => { %> 
+
+                    <div class="card ml-3 mr-3 mb-1">
+                        <div class="card-body">
+                            <footer class="blockquote-footer">
+                                <small>
+                                    Comment by:- <cite title="<%= value.email %>" class="text-success border-bottom border-black mb-0 pl-1"
+                                        id="user_name"><%= value.name %> </cite>
+                                </small>
+
+                                <p class="card-text pl-4" style="font-size: 0.8rem"> <%= value.comment %></p>
+                                <small class="pl-4">Date: </small>
+                            </footer>
+                            
+                        </div>
+                    </div>
+                    
+                    <% }); %>
+                    <% } %>
                 </div>
 
-                <% }); %>
+                <% } }); %>
                 <% } else { %>
 
                 <div class="card">
@@ -206,7 +236,7 @@
 
 <script>
     function selectTextarea() {
-        document.getElementById("writePost").select()    
+        document.getElementById("writePost").select()
     }
 </script>
 

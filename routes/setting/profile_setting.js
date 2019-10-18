@@ -150,8 +150,6 @@ router.post('/delete/:id', (req, res, next) => {
 
     db.query(query, (err, results, fields) => {
 
-        console.log('users select: ' + JSON.stringify(results[0]))
-
         if (err) {
             return res.status(500).send(err);
         }

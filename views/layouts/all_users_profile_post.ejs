@@ -78,7 +78,17 @@
                         <small><%= ` ${userpost.date.getHours()}:${userpost.date.getMinutes()}:${userpost.date.getSeconds()}` %></small>
 
                         
-                        <% include ../middleware/posts_comment.ejs %>
+                        <div>
+                        <form action="/comment/users/posts_comment" style="margin-top: -15px" method="POST">
+                            <small class="pull-right" style="color:  #2e86c1; cursor: pointer">
+                                <span class="comment_click" id="comment_click" onclick="showTextForComment()">comment on post</span>
+                            </small> 
+                            <span id="show_comment_post_form" style="display: none">
+                                <input type="submit" value="comment" type="button" class="btn btn-primary btn-sm pull-right mb-1" id="hide_post_comment">
+                                <textarea class="form-control" rows="5" placeholder="comment on post" name="post_comment"></textarea>
+                            </span>
+                        </form>   
+                    </div>
                         
                         
                     </div>
